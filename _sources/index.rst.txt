@@ -2,8 +2,9 @@
 VoLAB CNC2020 documentation
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-:Auteur: J.Soranzo
+:Auteur: J.Soranzo/Gilles Lecorsier
 :Date: Octobre 2020
+:MàJ: 17/09/2022
 :Societe: VoRoBoTics
 :Entity: VoLAB
 
