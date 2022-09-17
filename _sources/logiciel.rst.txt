@@ -7,8 +7,7 @@ Logiciels
 :Societe: VoRoBoTics
 :Entity: VoLAB
 
-.. contents::
-    :backlinks: top
+
 
 ====================================================================================================
 Choix
