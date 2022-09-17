@@ -91,6 +91,14 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Logiciels</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#choix">Choix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#autre-logiciel">Autre Logiciel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notre-demarche">Notre démarche</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#marlin">Marlin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dans-configuration-h">Dans configuration.h</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-du-pining">définition du pining ???</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-reelle">Config réelle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ressources">Ressources</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#grbl">GRBL</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#mise-au-point">Mise au point</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cook-boock">Cook boock</a></li>
@@ -103,23 +111,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#marlin">Marlin</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dans-configuration-h">Dans configuration.h</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#definition-du-pining">définition du pining ???</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#config-reelle">Config réelle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ressources">Ressources</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#nouvel-architecture-electronique-grbl-32bits">Nouvel architecture électronique GRBL 32bits</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#preparation">Préparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#liste-des-tests">Liste des tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-1-upload-index-html-gz-impossible">Écueil 1: upload index.html.gz impossible</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-2-ecran-blanc">Écueil 2 : écran blanc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-3-pas-de-connection-wifi">Écueil 3 : pas de connection wifi</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-4-pas-de-detection-en-hz">Écueil 4 : pas de détection en HZ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-5-nunchuck-non-fonctionnel">Écueil 5 : Nunchuck non fonctionnel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecueil-6-utilisation-de-estlcam-x-inverse">Écueil 6 : utilisation de Estlcam : x inversé</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-1-upload-index-html-gz-impossible-resolu">Écueil 1: upload index.html.gz impossible [RESOLU]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-2-ecran-blanc-resolu">Écueil 2 : écran blanc [RESOLU]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-3-pas-de-connection-wifi-resolu">Écueil 3 : pas de connection wifi[RESOLU]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-4-pas-de-detection-en-hz-resolu">Écueil 4 : pas de détection en HZ [RESOLU]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-5-nunchuck-non-fonctionnel-resolu-pb-hardware">Écueil 5 : Nunchuck non fonctionnel [RESOLU - pb hardware]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-6-utilisation-de-estlcam-x-inverse-contournement">Écueil 6 : utilisation de Estlcam : x inversé [CONTOURNEMENT]</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#logiciel-de-pilotage-pc-machine">Logiciel de pilotage PC &lt;-&gt; machine</a><ul>
@@ -246,15 +247,76 @@
 <p><a class="reference external" href="https://www.vectric.com/purchase/aspire">Vectric Aspire</a> <a class="footnote-reference brackets" href="#id5" id="id6">3</a> vu dans vidéo <a class="reference external" href="https://www.youtube.com/watch?v=KZNaejo5fGM">Youtube de la chaine Isodesign</a> <a class="footnote-reference brackets" href="#id7" id="id8">4</a></p>
 <p>Payant mais avec une version free trial pas limité dans le temps. Coûte 2160€</p>
 </div>
+<div class="section" id="notre-demarche">
+<h2>Notre démarche<a class="headerlink" href="#notre-demarche" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans un premier temps, nous avons utilisé Marlin afin de vérifier si nous étions en mesure de
+piloter correctement les moteurs. Choix dicté par notre expérience avec les imprimantes 3D.</p>
+<p>Ensuite nous sommes passé à GRBL sur carte ARDUINO2560 car il nous semblait plus adapté à cette
+utilisation et plus répandu dans la communauté des utilisateur de CNC.</p>
+<p>Nous avons rencontré des problèmes de pertes de pas sur l’axe X. Après de nombreux essais infructueux,
+nous sommes passé sur une carte à base d’ESP32 associé à GRBL32. Malheureusement cela a généré d’autres
+problèmes que nous avons résolus un à un. Mais la perte de pas était toujours présente.</p>
+<p>En désespoirs de cause nous sommes revenus à l’architecture initiale ARDUINO 2560 + GRBL.</p>
+<p>Nous avons fini par trouver la cause de notre problème : le microstepping des drivers de moteurs pas
+à pas.</p>
+<p>Ce serait intéressant de refaire le même genre de réglage avec GRBL32 !</p>
+</div>
+<div class="section" id="marlin">
+<h2>Marlin<a class="headerlink" href="#marlin" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Site fort intéressant <a class="reference external" href="https://marlinfw.org/">Marlinfw.org</a> <a class="footnote-reference brackets" href="#id9" id="id10">5</a></p>
+<p>Attention Marlin 2.x ne se compile qu’avec vsc et plateform io</p>
+<p>Donc implenté Marlin 1.1</p>
+<p>cf dossier:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">04</span><span class="o">-</span><span class="n">realisation</span>\<span class="n">Marlin</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>Configuration:</p>
+<div class="section" id="dans-configuration-h">
+<h3>Dans configuration.h<a class="headerlink" href="#dans-configuration-h" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Type de drivers ligne 550 environ</p>
+</div>
+<div class="section" id="definition-du-pining">
+<h3>définition du pining ???<a class="headerlink" href="#definition-du-pining" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Dans quel fichier ? En même temps on est compatible RAMPS: pins_RAMPS.h</p>
+<p>Modification des lignes:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define X_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+<span class="cp">#define Y_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+<span class="cp">#define Z_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+
+<span class="c1">//...</span>
+
+<span class="cp">#define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }</span>
+
+<span class="c1">//.. pas encore touché</span>
+<span class="cp">#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }</span>
+</pre></div>
+</div>
+<p>J’ai passé le feedrate à 15unit/s en effet avec 80step/mm 80*15 = 1200 step/s</p>
+<p>Valeur max 17unit/s à 80pas/mm voir 16 (16*80=1280)</p>
+<p>Nos vis à billes auraient un pas de 39.78/10tour soit 4mm/tour les moteurs sont sur du 200pas/tours</p>
+<p>soit 50,27 pas/mm</p>
+</div>
+<div class="section" id="config-reelle">
+<h3>Config réelle<a class="headerlink" href="#config-reelle" title="Lien permanent vers ce titre">¶</a></h3>
+<p>le 22/05/2020, premier run moteur X tourne dans le mauvais sens. Nous avons permutté les fils des
+bobines moteur côté carte TBmachin. X déplacement max théroique environ 300 mais marlin nous limite
+à 215mm</p>
+<p>Ligne 885 : <code class="docutils literal notranslate"><span class="pre">#define</span> <span class="pre">X_BED_SIZE</span> <span class="pre">300</span></code></p>
+</div>
+<div class="section" id="ressources">
+<h3>Ressources<a class="headerlink" href="#ressources" title="Lien permanent vers ce titre">¶</a></h3>
+<p><a class="reference external" href="https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/">https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/</a></p>
+</div>
+</div>
 <div class="section" id="grbl">
 <h2>GRBL<a class="headerlink" href="#grbl" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Même si il existe une version Mega2560, ça pique c’est visiblement pas ARDUINO friendly</p>
-<p><a class="reference external" href="https://github.com/gnea/grbl">GRBL sur github</a> <a class="footnote-reference brackets" href="#id13" id="id14">7</a></p>
-<p><a class="reference external" href="https://github.com/gnea/grbl/wiki">GRBL wikipage</a> <a class="footnote-reference brackets" href="#id15" id="id16">8</a></p>
-<p>Il y a les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">GRBL configurations</a> <a class="footnote-reference brackets" href="#id11" id="id12">6</a> : $0 à $132</p>
-<p>Mais aussi les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands">Grbl v1.1 Commands</a> <a class="footnote-reference brackets" href="#id9" id="id10">5</a> : $X, $$, $G…</p>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=AwQZh1lPpv8">Installation / Configuration GRBL 1/2 sur la chaîne CrazyMakers</a> <a class="footnote-reference brackets" href="#id17" id="id18">9</a></p>
-<p>La procédure est géniale !!! Mais attention du coup les source se retrouve dans librairie Arduino !!!</p>
+<p><a class="reference external" href="https://github.com/gnea/grbl">GRBL sur github</a> <a class="footnote-reference brackets" href="#id15" id="id16">8</a></p>
+<p><a class="reference external" href="https://github.com/gnea/grbl/wiki">GRBL wikipage</a> <a class="footnote-reference brackets" href="#id17" id="id18">9</a></p>
+<p>Il y a les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">GRBL configurations</a> <a class="footnote-reference brackets" href="#id13" id="id14">7</a> : $0 à $132</p>
+<p>Mais aussi les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands">Grbl v1.1 Commands</a> <a class="footnote-reference brackets" href="#id11" id="id12">6</a> : $X, $$, $G…</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=AwQZh1lPpv8">Installation / Configuration GRBL 1/2 sur la chaîne CrazyMakers</a> <a class="footnote-reference brackets" href="#id19" id="id20">10</a></p>
+<p>La procédure est géniale !!! Mais attention du coup les sources se retrouvent dans librairie Arduino !!!</p>
 <div class="admonition warning">
 <p class="admonition-title">Avertissement</p>
 <p>La version téléchargée dans la carte est dans : <code class="docutils literal notranslate"><span class="pre">...\Documents\Arduino\libraries\grbl</span></code></p>
@@ -268,10 +330,10 @@
 <span class="c1">#define HOMING_SINGLE_AXIS_COMMANDS</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://diymachining.com/grbl-steps-per-mm/">GRBL Steps Per mm – How to Fine Tune Your Settings sur diymachining.com</a> <a class="footnote-reference brackets" href="#id19" id="id20">10</a></p>
+<p><a class="reference external" href="https://diymachining.com/grbl-steps-per-mm/">GRBL Steps Per mm – How to Fine Tune Your Settings sur diymachining.com</a> <a class="footnote-reference brackets" href="#id21" id="id22">11</a></p>
 <p><a class="reference download internal" download="" href="_downloads/3800972e97fdc226ee72324c32788b25/GRBL_Settings_Pocket_Guide_Rev_B.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Grbl</span> <span class="pre">cheat</span> <span class="pre">sheet</span></code></a></p>
-<p><a class="reference external" href="http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf">Adresse du fichier original sur diymachining</a> <a class="footnote-reference brackets" href="#id21" id="id22">11</a></p>
-<p>Les commandes de <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">configuration de GRBL se trouve ici</a> <a class="footnote-reference brackets" href="#id11" id="id23">6</a></p>
+<p><a class="reference external" href="http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf">Adresse du fichier original sur diymachining</a> <a class="footnote-reference brackets" href="#id23" id="id24">12</a></p>
+<p>Les commandes de <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">configuration de GRBL se trouve ici</a> <a class="footnote-reference brackets" href="#id13" id="id25">7</a></p>
 <p>Nos réglages:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$0=10
 $1=25
@@ -316,7 +378,7 @@ GRBL)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="c1">#define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.</span>
 </pre></div>
 </div>
-<p>Informations <a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">complémentaires sur lesporteslogics.net</a> <a class="footnote-reference brackets" href="#id24" id="id25">12</a></p>
+<p>Informations <a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">complémentaires sur lesporteslogics.net</a> <a class="footnote-reference brackets" href="#id26" id="id27">13</a></p>
 <div class="section" id="mise-au-point">
 <h3>Mise au point<a class="headerlink" href="#mise-au-point" title="Lien permanent vers ce titre">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>?&lt;Idle|MPos:-0.995,-399.005,-0.995|FS:0,0|Ov:100,100,100&gt;
@@ -413,53 +475,6 @@ Z $102 : 1/16 microstep : 0-0-1 $100=800.000 axis travel resolution, step/mm
 </div>
 </div>
 </div>
-<div class="section" id="marlin">
-<h2>Marlin<a class="headerlink" href="#marlin" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Site fort intéressant <a class="reference external" href="https://marlinfw.org/">Marlinfw.org</a> <a class="footnote-reference brackets" href="#id26" id="id27">13</a></p>
-<p>Attention Marlin 2.x ne se compile qu’avec vsc et plateform io</p>
-<p>Donc implenté Marlin 1.1</p>
-<p>cf dossier:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">04</span><span class="o">-</span><span class="n">realisation</span>\<span class="n">Marlin</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="n">x</span>
-</pre></div>
-</div>
-<p>Configuration:</p>
-<div class="section" id="dans-configuration-h">
-<h3>Dans configuration.h<a class="headerlink" href="#dans-configuration-h" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Type de drivers ligne 550 environ</p>
-</div>
-<div class="section" id="definition-du-pining">
-<h3>définition du pining ???<a class="headerlink" href="#definition-du-pining" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Dans quel fichier ? En même temps on est compatible RAMPS: pins_RAMPS.h</p>
-<p>Modification des lignes:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define X_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
-<span class="cp">#define Y_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
-<span class="cp">#define Z_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
-
-<span class="c1">//...</span>
-
-<span class="cp">#define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }</span>
-
-<span class="c1">//.. pas encore touché</span>
-<span class="cp">#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }</span>
-</pre></div>
-</div>
-<p>J’ai passé le feedrate à 15unit/s en effet avec 80step/mm 80*15 = 1200 step/s</p>
-<p>Valeur max 17unit/s à 80pas/mm voir 16 (16*80=1280)</p>
-<p>Nos vis à billes auraient un pas de 39.78/10tour soit 4mm/tour les moteurs sont sur du 200pas/tours</p>
-<p>soit 50,27 pas/mm</p>
-</div>
-<div class="section" id="config-reelle">
-<h3>Config réelle<a class="headerlink" href="#config-reelle" title="Lien permanent vers ce titre">¶</a></h3>
-<p>le 22/05/2020, premier run moteur X tourne dans le mauvais sens. Nous avons permutté les fils des
-bobines moteur côté carte TBmachin. X déplacement max théroique environ 300 mais marlin nous limite
-à 215mm</p>
-<p>Ligne 885 : <code class="docutils literal notranslate"><span class="pre">#define</span> <span class="pre">X_BED_SIZE</span> <span class="pre">300</span></code></p>
-</div>
-<div class="section" id="ressources">
-<h3>Ressources<a class="headerlink" href="#ressources" title="Lien permanent vers ce titre">¶</a></h3>
-<p><a class="reference external" href="https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/">https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/</a></p>
-</div>
-</div>
 <div class="section" id="nouvel-architecture-electronique-grbl-32bits">
 <span id="grbl32soft"></span><span id="index-0"></span><h2>Nouvel architecture électronique GRBL 32bits<a class="headerlink" href="#nouvel-architecture-electronique-grbl-32bits" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="section" id="introduction">
@@ -503,8 +518,8 @@ passer sur une carte à base d’ESP32.</p>
 <li><p>test palpeur outil <strong>OK</strong></p></li>
 </ul>
 </div>
-<div class="section" id="ecueil-1-upload-index-html-gz-impossible">
-<h3>Écueil 1: upload index.html.gz impossible<a class="headerlink" href="#ecueil-1-upload-index-html-gz-impossible" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="section" id="ecueil-1-upload-index-html-gz-impossible-resolu">
+<h3>Écueil 1: upload index.html.gz impossible [RESOLU]<a class="headerlink" href="#ecueil-1-upload-index-html-gz-impossible-resolu" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Essais : Après <strong>upload du fichier index.html.gz</strong> de <code class="docutils literal notranslate"><span class="pre">/data</span></code> lors des premier essais l’écran dans
 le navigateur restait bloqué sur Loading…</p>
 <p>D’après les commentaires sur le forum, il est possible que cela soit du entre autre à un fichier
@@ -517,17 +532,17 @@ corrompu dans le file système, j’ai du effacer la mémoire avec esptools:</p>
 <p>Pour cela il faut installer une extension dans ARDUINO :</p>
 <p><a class="reference external" href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">Install ESP32 Filesystem Uploader in Arduino IDE</a> <a class="footnote-reference brackets" href="#id30" id="id31">15</a></p>
 </div>
-<div class="section" id="ecueil-2-ecran-blanc">
-<h3>Écueil 2 : écran blanc<a class="headerlink" href="#ecueil-2-ecran-blanc" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="section" id="ecueil-2-ecran-blanc-resolu">
+<h3>Écueil 2 : écran blanc [RESOLU]<a class="headerlink" href="#ecueil-2-ecran-blanc-resolu" title="Lien permanent vers ce titre">¶</a></h3>
 <p>config.h pour l’écran</p>
 <p>Si écran blanc alors</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define TFT_CARD_VERSION 1 écrire 2</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="ecueil-3-pas-de-connection-wifi">
-<h3>Écueil 3 : pas de connection wifi<a class="headerlink" href="#ecueil-3-pas-de-connection-wifi" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Pas de onnexion au WIFI. En branchant un terminal on voit juste après:</p>
+<div class="section" id="ecueil-3-pas-de-connection-wifi-resolu">
+<h3>Écueil 3 : pas de connection wifi[RESOLU]<a class="headerlink" href="#ecueil-3-pas-de-connection-wifi-resolu" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pas de connexion au WIFI. En branchant un terminal on voit juste après:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MSG</span><span class="p">:</span><span class="n">Mist</span> <span class="n">coolant</span> <span class="n">on</span> <span class="n">pin</span> <span class="n">GPIO</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span> <span class="p">]</span>
 </pre></div>
 </div>
@@ -537,14 +552,14 @@ corrompu dans le file système, j’ai du effacer la mémoire avec esptools:</p>
 <p>Adresse ip fixée à 192.168.1.43</p>
 </div>
 </div>
-<div class="section" id="ecueil-4-pas-de-detection-en-hz">
-<h3>Écueil 4 : pas de détection en HZ<a class="headerlink" href="#ecueil-4-pas-de-detection-en-hz" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="section" id="ecueil-4-pas-de-detection-en-hz-resolu">
+<h3>Écueil 4 : pas de détection en HZ [RESOLU]<a class="headerlink" href="#ecueil-4-pas-de-detection-en-hz-resolu" title="Lien permanent vers ce titre">¶</a></h3>
 <p><strong>08/01/2022</strong> : Pas de détection du HZ</p>
 <p>Pb électrique ? Connection vérifiées <strong>OK</strong></p>
 <p>pb électronique ? <strong>Solution</strong> : coupé la broche du switch du petit pcb et souder le fil en directe.</p>
 </div>
-<div class="section" id="ecueil-5-nunchuck-non-fonctionnel">
-<span id="ecueilsoft5"></span><h3>Écueil 5 : Nunchuck non fonctionnel<a class="headerlink" href="#ecueil-5-nunchuck-non-fonctionnel" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="section" id="ecueil-5-nunchuck-non-fonctionnel-resolu-pb-hardware">
+<span id="ecueilsoft5"></span><h3>Écueil 5 : Nunchuck non fonctionnel [RESOLU - pb hardware]<a class="headerlink" href="#ecueil-5-nunchuck-non-fonctionnel-resolu-pb-hardware" title="Lien permanent vers ce titre">¶</a></h3>
 <p>The I2C address of both Wii Nunchuks is 0x52.</p>
 <p>Scan I2C réalisé et retourné 0x52 pour les 2 NC (la bleu et la blanche)</p>
 <p>Programme de test l’Arduino se plante</p>
@@ -558,8 +573,8 @@ corrompu dans le file système, j’ai du effacer la mémoire avec esptools:</p>
 <p><strong>Solution</strong> : au final détection d’une broche défectueuse sur l’ESP utilisé. Conséquence : remplacement
 de la carte ESP32. Tout est rentré dans l’ordre.</p>
 </div>
-<div class="section" id="ecueil-6-utilisation-de-estlcam-x-inverse">
-<h3>Écueil 6 : utilisation de Estlcam : x inversé<a class="headerlink" href="#ecueil-6-utilisation-de-estlcam-x-inverse" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="section" id="ecueil-6-utilisation-de-estlcam-x-inverse-contournement">
+<h3>Écueil 6 : utilisation de Estlcam : x inversé [CONTOURNEMENT]<a class="headerlink" href="#ecueil-6-utilisation-de-estlcam-x-inverse-contournement" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Solution select all path miror</p>
 </div>
 </div>
@@ -685,31 +700,31 @@ saisir des nombres ?</p>
 <dd><p><a class="reference external" href="https://www.youtube.com/watch?v=KZNaejo5fGM">https://www.youtube.com/watch?v=KZNaejo5fGM</a></p>
 </dd>
 <dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id10">5</a></span></dt>
+<dd><p><a class="reference external" href="https://marlinfw.org/">https://marlinfw.org/</a></p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
 <dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands">https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands</a></p>
 </dd>
-<dt class="label" id="id11"><span class="brackets">6</span><span class="fn-backref">(<a href="#id12">1</a>,<a href="#id23">2</a>)</span></dt>
+<dt class="label" id="id13"><span class="brackets">7</span><span class="fn-backref">(<a href="#id14">1</a>,<a href="#id25">2</a>)</span></dt>
 <dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration</a></p>
 </dd>
-<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id14">7</a></span></dt>
+<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id16">8</a></span></dt>
 <dd><p><a class="reference external" href="https://github.com/gnea/grbl">https://github.com/gnea/grbl</a></p>
 </dd>
-<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id16">8</a></span></dt>
+<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id18">9</a></span></dt>
 <dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki">https://github.com/gnea/grbl/wiki</a></p>
 </dd>
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id18">9</a></span></dt>
+<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id20">10</a></span></dt>
 <dd><p><a class="reference external" href="https://www.youtube.com/watch?v=AwQZh1lPpv8">https://www.youtube.com/watch?v=AwQZh1lPpv8</a></p>
 </dd>
-<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id20">10</a></span></dt>
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id22">11</a></span></dt>
 <dd><p><a class="reference external" href="https://diymachining.com/grbl-steps-per-mm/">https://diymachining.com/grbl-steps-per-mm/</a></p>
 </dd>
-<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id22">11</a></span></dt>
+<dt class="label" id="id23"><span class="brackets"><a class="fn-backref" href="#id24">12</a></span></dt>
 <dd><p><a class="reference external" href="http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf">http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf</a></p>
 </dd>
-<dt class="label" id="id24"><span class="brackets"><a class="fn-backref" href="#id25">12</a></span></dt>
-<dd><p><a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration</a></p>
-</dd>
 <dt class="label" id="id26"><span class="brackets"><a class="fn-backref" href="#id27">13</a></span></dt>
-<dd><p><a class="reference external" href="https://marlinfw.org/">https://marlinfw.org/</a></p>
+<dd><p><a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration</a></p>
 </dd>
 <dt class="label" id="id28"><span class="brackets"><a class="fn-backref" href="#id29">14</a></span></dt>
 <dd><p><a class="reference external" href="https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/">https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/</a></p>
