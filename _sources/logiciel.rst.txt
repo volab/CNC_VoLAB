@@ -330,6 +330,11 @@ https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/
 ====================================================================================================
 Nouvel architecture électronique GRBL 32bits
 ====================================================================================================
+Introduction
+----------------------------------------------------------------------------------------------------
+Suite aux problèmes de pertes de pas sur l'axe X, nous avons décidé de changer d'électronique pour 
+passer sur une carte à base d'ESP32.
+
 Préparation
 ----------------------------------------------------------------------------------------------------
 
