@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logiciels &mdash; Documentation VoLAB CNC2020 </title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Matérieux" href="materiaux.html" />
+    <link rel="prev" title="Electronique" href="electronique.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> VoLAB CNC2020
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tables des matières</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="presentation.html">Presentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mecanique.html">Mécanique</a></li>
+<li class="toctree-l1"><a class="reference internal" href="electronique.html">Electronique</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logiciels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#choix">Choix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autre-logiciel">Autre Logiciel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grbl">GRBL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mise-au-point">Mise au point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cook-boock">Cook boock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pb-homing-switch-y">Pb homing switch Y</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connaitre-la-version">Connaître la version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#essais-du-16-04-2022">Essais du 16/04/2022</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mise-au-point-finale-avec-grbl-8bits">Mise au point finale avec GRBL 8bits</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reglage-des-drivers">Réglage des drivers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#marlin">Marlin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dans-configuration-h">Dans configuration.h</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-du-pining">définition du pining ???</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-reelle">Config réelle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ressources">Ressources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nouvel-architecture-electronique-grbl-32bits">Nouvel architecture électronique GRBL 32bits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparation">Préparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#liste-des-tests">Liste des tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-1-upload-index-html-gz-impossible">Écueil 1: upload index.html.gz impossible</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-2-ecran-blanc">Écueil 2 : écran blanc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-3-pas-de-connection-wifi">Écueil 3 : pas de connection wifi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-4-pas-de-detection-en-hz">Écueil 4 : pas de détection en HZ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-5-nunchuck-non-fonctionnel">Écueil 5 : Nunchuck non fonctionnel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-6-utilisation-de-estlcam-x-inverse">Écueil 6 : utilisation de Estlcam : x inversé</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#logiciel-de-pilotage-pc-machine">Logiciel de pilotage PC &lt;-&gt; machine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ugs-ou-universal-gcode-sender">UGS ou  Universal gcode Sender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#alarm">ALARM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#telecommande-a-base-de-pave-numerique">Télécommande à base de pavé numérique</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bcnc">bCnC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linuxcnc">LinuxCNC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autres">Autres</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#candle">CANDLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#camotics-simulateur">CAMOTICS Simulateur</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generation-du-g-code">Génération du G-code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#procedure-inkscape">Procédure INKSCAPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avec-estlcam">Avec Estlcam</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#depuis-carte-mentale">Depuis carte mentale</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="materiaux.html">Matérieux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avancement.html">Avancement travaux CNC</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VoLAB CNC2020</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Logiciels</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/logiciel.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logiciels">
+<h1><a class="toc-backref" href="#sommaire">Logiciels</a><a class="headerlink" href="#logiciels" title="Lien permanent vers ce titre">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Auteur</dt>
+<dd class="field-odd"><p>J.Soranzo</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>Octobre 2020</p>
+</dd>
+<dt class="field-odd">Societe</dt>
+<dd class="field-odd"><p>VoRoBoTics</p>
+</dd>
+<dt class="field-even">Entity</dt>
+<dd class="field-even"><p>VoLAB</p>
+</dd>
+</dl>
+<div class="contents topic" id="sommaire">
+<p class="topic-title">Sommaire</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#logiciels" id="id48">Logiciels</a></p>
+<ul>
+<li><p><a class="reference internal" href="#choix" id="id49">Choix</a></p></li>
+<li><p><a class="reference internal" href="#autre-logiciel" id="id50">Autre Logiciel</a></p></li>
+<li><p><a class="reference internal" href="#grbl" id="id51">GRBL</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mise-au-point" id="id52">Mise au point</a></p></li>
+<li><p><a class="reference internal" href="#cook-boock" id="id53">Cook boock</a></p></li>
+<li><p><a class="reference internal" href="#pb-homing-switch-y" id="id54">Pb homing switch Y</a></p></li>
+<li><p><a class="reference internal" href="#connaitre-la-version" id="id55">Connaître la version</a></p></li>
+<li><p><a class="reference internal" href="#essais-du-16-04-2022" id="id56">Essais du 16/04/2022</a></p></li>
+<li><p><a class="reference internal" href="#mise-au-point-finale-avec-grbl-8bits" id="id57">Mise au point finale avec GRBL 8bits</a></p>
+<ul>
+<li><p><a class="reference internal" href="#reglage-des-drivers" id="id58">Réglage des drivers</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#marlin" id="id59">Marlin</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dans-configuration-h" id="id60">Dans configuration.h</a></p></li>
+<li><p><a class="reference internal" href="#definition-du-pining" id="id61">définition du pining ???</a></p></li>
+<li><p><a class="reference internal" href="#config-reelle" id="id62">Config réelle</a></p></li>
+<li><p><a class="reference internal" href="#ressources" id="id63">Ressources</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nouvel-architecture-electronique-grbl-32bits" id="id64">Nouvel architecture électronique GRBL 32bits</a></p>
+<ul>
+<li><p><a class="reference internal" href="#preparation" id="id65">Préparation</a></p></li>
+<li><p><a class="reference internal" href="#liste-des-tests" id="id66">Liste des tests</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-1-upload-index-html-gz-impossible" id="id67">Écueil 1: upload index.html.gz impossible</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-2-ecran-blanc" id="id68">Écueil 2 : écran blanc</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-3-pas-de-connection-wifi" id="id69">Écueil 3 : pas de connection wifi</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-4-pas-de-detection-en-hz" id="id70">Écueil 4 : pas de détection en HZ</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-5-nunchuck-non-fonctionnel" id="id71">Écueil 5 : Nunchuck non fonctionnel</a></p></li>
+<li><p><a class="reference internal" href="#ecueil-6-utilisation-de-estlcam-x-inverse" id="id72">Écueil 6 : utilisation de Estlcam : x inversé</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#logiciel-de-pilotage-pc-machine" id="id73">Logiciel de pilotage PC &lt;-&gt; machine</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ugs-ou-universal-gcode-sender" id="id74">UGS ou  Universal gcode Sender</a></p>
+<ul>
+<li><p><a class="reference internal" href="#alarm" id="id75">ALARM</a></p></li>
+<li><p><a class="reference internal" href="#telecommande-a-base-de-pave-numerique" id="id76">Télécommande à base de pavé numérique</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bcnc" id="id77">bCnC</a></p></li>
+<li><p><a class="reference internal" href="#linuxcnc" id="id78">LinuxCNC</a></p></li>
+<li><p><a class="reference internal" href="#autres" id="id79">Autres</a></p>
+<ul>
+<li><p><a class="reference internal" href="#candle" id="id80">CANDLE</a></p></li>
+<li><p><a class="reference internal" href="#camotics-simulateur" id="id81">CAMOTICS Simulateur</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#generation-du-g-code" id="id82">Génération du G-code</a></p>
+<ul>
+<li><p><a class="reference internal" href="#procedure-inkscape" id="id83">Procédure INKSCAPE</a></p></li>
+<li><p><a class="reference internal" href="#avec-estlcam" id="id84">Avec Estlcam</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#depuis-carte-mentale" id="id85">Depuis carte mentale</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="choix">
+<h2><a class="toc-backref" href="#sommaire">Choix</a><a class="headerlink" href="#choix" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il y a plusieurs aspect à aborder.</p>
+<ul class="simple">
+<li><p>Le firmware</p></li>
+<li><p>le logiciel de dialogue du PC vers GRBL</p></li>
+<li><p>Le logiciel de génération du g-code</p></li>
+<li><p>Le logiciel de desgin des pièces. Pour ce dernier point c’est plutôt simple : Fusion360, ou FreeCAD.</p></li>
+</ul>
+<p>Le firmware : on va tenté le coup avec GRBL</p>
+<p>Il en existe une <a class="reference external" href="https://github.com/gnea/grbl-Mega">version dédiée aux cartes à base de MEGA2560</a> <a class="footnote-reference brackets" href="#id1" id="id2">1</a></p>
+<p>Pour ce qui est de l’envoi du g-code il y a <a class="reference external" href="https://github.com/winder/Universal-G-Code-Sender">universal G-code Sender</a> <a class="footnote-reference brackets" href="#id3" id="id4">2</a></p>
+</div>
+<div class="section" id="autre-logiciel">
+<h2><a class="toc-backref" href="#sommaire">Autre Logiciel</a><a class="headerlink" href="#autre-logiciel" title="Lien permanent vers ce titre">¶</a></h2>
+<p><a class="reference external" href="https://www.vectric.com/purchase/aspire">Vectric Aspire</a> <a class="footnote-reference brackets" href="#id5" id="id6">3</a> vu dans vidéo <a class="reference external" href="https://www.youtube.com/watch?v=KZNaejo5fGM">Youtube de la chaine Isodesign</a> <a class="footnote-reference brackets" href="#id7" id="id8">4</a></p>
+<p>Payant mais avec une version free trial pas limité dans le temps. Coûte 2160€</p>
+</div>
+<div class="section" id="grbl">
+<h2><a class="toc-backref" href="#sommaire">GRBL</a><a class="headerlink" href="#grbl" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Même si il existe une version Mega2560, ça pique c’est visiblement pas ARDUINO friendly</p>
+<p><a class="reference external" href="https://github.com/gnea/grbl">GRBL sur github</a> <a class="footnote-reference brackets" href="#id13" id="id14">7</a></p>
+<p><a class="reference external" href="https://github.com/gnea/grbl/wiki">GRBL wikipage</a> <a class="footnote-reference brackets" href="#id15" id="id16">8</a></p>
+<p>Il y a les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">GRBL configurations</a> <a class="footnote-reference brackets" href="#id11" id="id12">6</a> : $0 à $132</p>
+<p>Mais aussi les <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands">Grbl v1.1 Commands</a> <a class="footnote-reference brackets" href="#id9" id="id10">5</a> : $X, $$, $G…</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=AwQZh1lPpv8">Installation / Configuration GRBL 1/2 sur la chaîne CrazyMakers</a> <a class="footnote-reference brackets" href="#id17" id="id18">9</a></p>
+<p>La procédure est géniale !!! Mais attention du coup les source se retrouve dans librairie Arduino !!!</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>La version téléchargée dans la carte est dans : <code class="docutils literal notranslate"><span class="pre">...\Documents\Arduino\libraries\grbl</span></code></p>
+</div>
+<p>Modifications apportées dans le fichier config.h:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define DEFAULTS_RAMPS_BOARD</span>
+<span class="c1">#define CPU_MAP_2560_RAMPS_BOARD (lignes décommentées - les 2 autres au dessus commentées)</span>
+
+
+<span class="c1">#define HOMING_FORCE_SET_ORIGIN: ok</span>
+<span class="c1">#define HOMING_SINGLE_AXIS_COMMANDS</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://diymachining.com/grbl-steps-per-mm/">GRBL Steps Per mm – How to Fine Tune Your Settings sur diymachining.com</a> <a class="footnote-reference brackets" href="#id19" id="id20">10</a></p>
+<p><a class="reference download internal" download="" href="_downloads/3800972e97fdc226ee72324c32788b25/GRBL_Settings_Pocket_Guide_Rev_B.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Grbl</span> <span class="pre">cheat</span> <span class="pre">sheet</span></code></a></p>
+<p><a class="reference external" href="http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf">Adresse du fichier original sur diymachining</a> <a class="footnote-reference brackets" href="#id21" id="id22">11</a></p>
+<p>Les commandes de <a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">configuration de GRBL se trouve ici</a> <a class="footnote-reference brackets" href="#id11" id="id23">6</a></p>
+<p>Nos réglages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$0=10
+$1=25
+$2=0
+$3=5 : inverse X et Z
+$4=0
+$5=0
+$6=0
+$10=17 : report fin de course mask 16
+$11=0.010
+$12=0.002
+$13=0
+$20=0
+$21=0
+$22=0
+$23=0
+$24=25.000
+$25=500.000
+$26=250
+$27=1.000
+$30=1000
+$31=0
+$32=0
+$100=50.270
+$101=50.270
+$102=50.270
+$110=500.000
+$111=500.000
+$112=500.000
+$120=20.000
+$121=20.000
+$122=20.000
+$130=200.000
+$131=400.000
+$132=200.000
+</pre></div>
+</div>
+<p>Vérification des fins de courses. Contrairement à Marlin, grbl n’implémente pas la commande M119.
+A la place, il faut commencer par activer un report avec $10=17 (pas très bien documenté sur le wiki
+GRBL)</p>
+<p>Signification réelle, à revoir:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="c1">#define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.</span>
+</pre></div>
+</div>
+<p>Informations <a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">complémentaires sur lesporteslogics.net</a> <a class="footnote-reference brackets" href="#id24" id="id25">12</a></p>
+<div class="section" id="mise-au-point">
+<h3><a class="toc-backref" href="#sommaire">Mise au point</a><a class="headerlink" href="#mise-au-point" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>?&lt;Idle|MPos:-0.995,-399.005,-0.995|FS:0,0|Ov:100,100,100&gt;
+Après un $HX, Y et Z
+Mauvais comportement de Y
+$3=0 et $23=2 donc on a seulement la direction de homing Y qui est inversée.
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HX
+G0 X-50.0
+?&lt;Idle|MPos:-6.008,-399.005,-0.995|FS:0,0&gt;
+G0 X-100.0
+?&lt;Idle|MPos:-55.998,-399.005,-0.995|FS:0,0&gt;
+
+-100.0 = -56mm
+-50.0= -6mm
+-60.0 = -16mm
+Cotes coroborées par la commande ? bien que il semble que le 0 soit décallé de 45mm vers la droite
+
+la commande $# révèle:
+[G54:44.000,0.000,0.000]
+[G55:0.000,0.000,0.000]
+[G56:0.000,0.000,0.000]
+[G57:0.000,0.000,0.000]
+[G58:0.000,0.000,0.000]
+[G59:0.000,0.000,0.000]
+[G28:0.000,0.000,0.000]
+[G30:0.000,0.000,0.000]
+[G92:-44.000,0.000,0.000]
+[TLO:0.000]
+[PRB:0.000,0.000,0.000:0]
+
+G10 P1 L20 : permettrait de changer cet offset! error 26
+
+error 26: A G-code command implicitly or explicitly requires XYZ axis words in the block, but none were detected.
+
+G10 L2 P1 X0 Y0 Z0 (révoque les décalages en X, Y et Z du système N°1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="cook-boock">
+<h3><a class="toc-backref" href="#sommaire">Cook boock</a><a class="headerlink" href="#cook-boock" title="Lien permanent vers ce titre">¶</a></h3>
+<p>$H ($HX, $HY… si)
+$$ voir la config</p>
+<p>? = Voir les fins de courses</p>
+<p>envoi de G code: G0 X-50.0 (ne pas oublier le .0)</p>
+<p>$21=1 hard limit n’est pas pris en compte quand on envoi des g-code en manuel.</p>
+</div>
+<div class="section" id="pb-homing-switch-y">
+<span id="pbhomingy"></span><h3><a class="toc-backref" href="#sommaire">Pb homing switch Y</a><a class="headerlink" href="#pb-homing-switch-y" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Simplement en permuttant les 2 cable DB9 entre X et Y a résolut le pb.</p>
+<p>La solution semble être matériel : condensateur sur le signal.</p>
+</div>
+<div class="section" id="connaitre-la-version">
+<h3><a class="toc-backref" href="#sommaire">Connaître la version</a><a class="headerlink" href="#connaitre-la-version" title="Lien permanent vers ce titre">¶</a></h3>
+<p>$I : ident</p>
+<p>le 02/10/2021 nous avions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">VER</span><span class="p">:</span><span class="mf">1.1</span><span class="n">g</span><span class="o">.</span><span class="mf">20180813.</span><span class="n">Mega</span><span class="p">:]</span>
+<span class="p">[</span><span class="n">OPT</span><span class="p">:</span><span class="n">VNM</span><span class="o">+</span><span class="n">ZH</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">255</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Avant recherchement arduino avec: <code class="docutils literal notranslate"><span class="pre">CNC\projet\04-realisation\grbl\grbl-master\grbl</span></code></p>
+<p>Fichier : grbl.h modifié.</p>
+<p>Version plantante !</p>
+<p>Version fonctionnelle : grbl-Mega-edge.zip</p>
+</div>
+<div class="section" id="essais-du-16-04-2022">
+<h3><a class="toc-backref" href="#sommaire">Essais du 16/04/2022</a><a class="headerlink" href="#essais-du-16-04-2022" title="Lien permanent vers ce titre">¶</a></h3>
+<p>essais moteur Z à 1/2 de pas mode 2A meilleurs résultats.</p>
+</div>
+<div class="section" id="mise-au-point-finale-avec-grbl-8bits">
+<h3><a class="toc-backref" href="#sommaire">Mise au point finale avec GRBL 8bits</a><a class="headerlink" href="#mise-au-point-finale-avec-grbl-8bits" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="without-title admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Au 30/04/2022 GRAVURE OK pour la deuxième fois</p>
+</div>
+<div class="section" id="reglage-des-drivers">
+<h4><a class="toc-backref" href="#sommaire">Réglage des drivers</a><a class="headerlink" href="#reglage-des-drivers" title="Lien permanent vers ce titre">¶</a></h4>
+<p>le 30/04/2022:</p>
+<p>Essais:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>2/A microstep : 1-0-1 $100=100.540 axis travel resolution, step/mm OK déplacement Z OK valeur déplacement Ok
+2/B microstep : 0-1-1 $100=100.540 axis travel resolution, step/mm OK déplacement Z OK valeur déplacement OK
+1/4 microstep : 1-0-0 $100=201.080 axis travel resolution, step/mm OK déplacement Z OK valeur déplacement OK
+1/8 microstep : 0-1-0 $100=402.16 axis travel resolution, step/mm OK déplacement X et Y OK valeur déplacement OK Le moteur tourne encore mieux choix gardé
+1/16 microstep : 0-0-1 $100=804.32 axis travel resolution, step/mm OK déplacement Z OK valeur déplacement OK à garder avec $100=800.000 choix terminal
+1/32 microstep : 0-0-0 $100=1588 axis travel resolution, step/mm OK déplacement Z OK valeur déplacement OK
+
+Réglages terminaux
+X $100 : 1/8 microstep : 0-1-0 $100=402.16 axis travel resolution, step/mm
+Y $101 : 1/4 microstep : 1-0-0 $101=201.080 axis travel resolution, step/mm
+Z $102 : 1/16 microstep : 0-0-1 $100=800.000 axis travel resolution, step/mm
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="marlin">
+<h2><a class="toc-backref" href="#sommaire">Marlin</a><a class="headerlink" href="#marlin" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Site fort intéressant <a class="reference external" href="https://marlinfw.org/">Marlinfw.org</a> <a class="footnote-reference brackets" href="#id26" id="id27">13</a></p>
+<p>Attention Marlin 2.x ne se compile qu’avec vsc et plateform io</p>
+<p>Donc implenté Marlin 1.1</p>
+<p>cf dossier:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">04</span><span class="o">-</span><span class="n">realisation</span>\<span class="n">Marlin</span><span class="o">-</span><span class="mf">1.1</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>Configuration:</p>
+<div class="section" id="dans-configuration-h">
+<h3><a class="toc-backref" href="#sommaire">Dans configuration.h</a><a class="headerlink" href="#dans-configuration-h" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Type de drivers ligne 550 environ</p>
+</div>
+<div class="section" id="definition-du-pining">
+<h3><a class="toc-backref" href="#sommaire">définition du pining ???</a><a class="headerlink" href="#definition-du-pining" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Dans quel fichier ? En même temps on est compatible RAMPS: pins_RAMPS.h</p>
+<p>Modification des lignes:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define X_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+<span class="cp">#define Y_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+<span class="cp">#define Z_MIN_ENDSTOP_INVERTING true </span><span class="c1">// set to true to invert the logic of the endstop.</span>
+
+<span class="c1">//...</span>
+
+<span class="cp">#define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }</span>
+
+<span class="c1">//.. pas encore touché</span>
+<span class="cp">#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }</span>
+</pre></div>
+</div>
+<p>J’ai passé le feedrate à 15unit/s en effet avec 80step/mm 80*15 = 1200 step/s</p>
+<p>Valeur max 17unit/s à 80pas/mm voir 16 (16*80=1280)</p>
+<p>Nos vis à billes auraient un pas de 39.78/10tour soit 4mm/tour les moteurs sont sur du 200pas/tours</p>
+<p>soit 50,27 pas/mm</p>
+</div>
+<div class="section" id="config-reelle">
+<h3><a class="toc-backref" href="#sommaire">Config réelle</a><a class="headerlink" href="#config-reelle" title="Lien permanent vers ce titre">¶</a></h3>
+<p>le 22/05/2020, premier run moteur X tourne dans le mauvais sens. Nous avons permutté les fils des
+bobines moteur côté carte TBmachin. X déplacement max théroique environ 300 mais marlin nous limite
+à 215mm</p>
+<p>Ligne 885 : <code class="docutils literal notranslate"><span class="pre">#define</span> <span class="pre">X_BED_SIZE</span> <span class="pre">300</span></code></p>
+</div>
+<div class="section" id="ressources">
+<h3><a class="toc-backref" href="#sommaire">Ressources</a><a class="headerlink" href="#ressources" title="Lien permanent vers ce titre">¶</a></h3>
+<p><a class="reference external" href="https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/">https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/</a></p>
+</div>
+</div>
+<div class="section" id="nouvel-architecture-electronique-grbl-32bits">
+<span id="grbl32soft"></span><span id="index-0"></span><h2><a class="toc-backref" href="#sommaire">Nouvel architecture électronique GRBL 32bits</a><a class="headerlink" href="#nouvel-architecture-electronique-grbl-32bits" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="preparation">
+<h3><a class="toc-backref" href="#sommaire">Préparation</a><a class="headerlink" href="#preparation" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Site : <a class="reference external" href="https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/">GRBL 32bits Board V2.0</a> <a class="footnote-reference brackets" href="#id28" id="id29">14</a></p>
+<p>config partie écran:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define LOCAL_IP &quot;192.168.1.44&quot;   // fix IP address</span>
+
+<span class="c1">#define GRBL_TELNET_IP &quot;192.168.1.43&quot; // IP address of GRBL_ESP32 telnet server  (as defined in GRBL_ESP32)</span>
+</pre></div>
+</div>
+<p>Compilation de la partie firmware écran non réussi sur ARDUINO 1.8.9</p>
+<p>Réussie sur Lattepanda,  fraîche install ARDUINO 1.8.18 + les 4 lib fournies sur le site</p>
+<p>GRBL programmée par le même cheminement</p>
+</div>
+<div class="section" id="liste-des-tests">
+<h3><a class="toc-backref" href="#sommaire">Liste des tests</a><a class="headerlink" href="#liste-des-tests" title="Lien permanent vers ce titre">¶</a></h3>
+<ul class="simple">
+<li><p>connection web à la base &#64;IP .44 <strong>OK</strong></p></li>
+<li><p>connection web à la partie écran &#64;ip .43 <strong>OK</strong></p></li>
+<li><p>mouvement des axes <strong>OK</strong></p></li>
+<li><p>évaluation précision des mouvements</p></li>
+<li><p>hard home XYZ <strong>OK</strong></p></li>
+<li><dl class="simple">
+<dt>transfert fichier carte SD <strong>OK</strong></dt><dd><ul>
+<li><p>base <strong>OK</strong></p></li>
+<li><p>Ecran <strong>OK</strong></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>essai Nunchuck <strong>ECHEC</strong></p></li>
+<li><p>personnalisation des boutons (écran) <strong>OK</strong></p></li>
+<li><p>Essai de tracé d’un cercle <strong>ECHEC PARTIEL</strong></p></li>
+<li><p>tester le system de homing <strong>OK</strong></p></li>
+<li><p>test palpeur outil <strong>OK</strong></p></li>
+</ul>
+</div>
+<div class="section" id="ecueil-1-upload-index-html-gz-impossible">
+<h3><a class="toc-backref" href="#sommaire">Écueil 1: upload index.html.gz impossible</a><a class="headerlink" href="#ecueil-1-upload-index-html-gz-impossible" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Essais : Après <strong>upload du fichier index.html.gz</strong> de <code class="docutils literal notranslate"><span class="pre">/data</span></code> lors des premier essais l’écran dans
+le navigateur restait bloqué sur Loading…</p>
+<p>D’après les commentaires sur le forum, il est possible que cela soit du entre autre à un fichier
+corrompu dans le file système, j’ai du effacer la mémoire avec esptools:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">esptool</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">port</span> <span class="n">COM7</span> <span class="n">erase_flash</span>
+</pre></div>
+</div>
+<p>Puis programmer les fichiers via la commande Arduino :  ESP32 Sketch data Upload…</p>
+<a class="reference internal image-reference" href="_images/captureDataUpload.jpg"><img alt="_images/captureDataUpload.jpg" src="_images/captureDataUpload.jpg" style="width: 300px;" /></a>
+<p>Pour cela il faut installer une extension dans ARDUINO :</p>
+<p><a class="reference external" href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">Install ESP32 Filesystem Uploader in Arduino IDE</a> <a class="footnote-reference brackets" href="#id30" id="id31">15</a></p>
+</div>
+<div class="section" id="ecueil-2-ecran-blanc">
+<h3><a class="toc-backref" href="#sommaire">Écueil 2 : écran blanc</a><a class="headerlink" href="#ecueil-2-ecran-blanc" title="Lien permanent vers ce titre">¶</a></h3>
+<p>config.h pour l’écran</p>
+<p>Si écran blanc alors</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define TFT_CARD_VERSION 1 écrire 2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ecueil-3-pas-de-connection-wifi">
+<h3><a class="toc-backref" href="#sommaire">Écueil 3 : pas de connection wifi</a><a class="headerlink" href="#ecueil-3-pas-de-connection-wifi" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pas de onnexion au WIFI. En branchant un terminal on voit juste après:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MSG</span><span class="p">:</span><span class="n">Mist</span> <span class="n">coolant</span> <span class="n">on</span> <span class="n">pin</span> <span class="n">GPIO</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Probablement pb d’antenne donc réception difficile</p>
+<div class="without-title admonition note">
+<p class="admonition-title">Note</p>
+<p>Adresse ip fixée à 192.168.1.43</p>
+</div>
+</div>
+<div class="section" id="ecueil-4-pas-de-detection-en-hz">
+<h3><a class="toc-backref" href="#sommaire">Écueil 4 : pas de détection en HZ</a><a class="headerlink" href="#ecueil-4-pas-de-detection-en-hz" title="Lien permanent vers ce titre">¶</a></h3>
+<p><strong>08/01/2022</strong> : Pas de détection du HZ</p>
+<p>Pb électrique ? Connection vérifiées <strong>OK</strong></p>
+<p>pb électronique ? <strong>Solution</strong> : coupé la broche du switch du petit pcb et souder le fil en directe.</p>
+</div>
+<div class="section" id="ecueil-5-nunchuck-non-fonctionnel">
+<span id="ecueilsoft5"></span><h3><a class="toc-backref" href="#sommaire">Écueil 5 : Nunchuck non fonctionnel</a><a class="headerlink" href="#ecueil-5-nunchuck-non-fonctionnel" title="Lien permanent vers ce titre">¶</a></h3>
+<p>The I2C address of both Wii Nunchuks is 0x52.</p>
+<p>Scan I2C réalisé et retourné 0x52 pour les 2 NC (la bleu et la blanche)</p>
+<p>Programme de test l’Arduino se plante</p>
+<p>Video à regarder : <a class="reference external" href="https://www.youtube.com/watch?v=KPBj5rZo6bg">https://www.youtube.com/watch?v=KPBj5rZo6bg</a></p>
+<a class="reference internal image-reference" href="_images/nunchuckAdaptator.jpg"><img alt="_images/nunchuckAdaptator.jpg" src="_images/nunchuckAdaptator.jpg" style="width: 300px;" /></a>
+<p>scanner i2c : <code class="docutils literal notranslate"><span class="pre">CNC\projet\04-realisation\nunchuck\i2cScan</span></code></p>
+<p><a class="reference external" href="https://github.com/infusion/Fritzing/tree/master/Nunchuk">https://github.com/infusion/Fritzing/tree/master/Nunchuk</a></p>
+<p><a class="reference external" href="https://www.xarg.org/2016/12/using-a-wii-nunchuk-with-arduino/">https://www.xarg.org/2016/12/using-a-wii-nunchuk-with-arduino/</a></p>
+<p>Demo avec processing <strong>ok</strong></p>
+<p>recherche dans le code de la CNC controleur</p>
+<p><strong>Solution</strong> : au final détection d’une broche défectueuse sur l’ESP utilisé. Conséquence : remplacement
+de la carte ESP32. Tout est rentré dans l’ordre.</p>
+</div>
+<div class="section" id="ecueil-6-utilisation-de-estlcam-x-inverse">
+<h3><a class="toc-backref" href="#sommaire">Écueil 6 : utilisation de Estlcam : x inversé</a><a class="headerlink" href="#ecueil-6-utilisation-de-estlcam-x-inverse" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Solution select all path miror</p>
+</div>
+</div>
+<div class="section" id="logiciel-de-pilotage-pc-machine">
+<h2><a class="toc-backref" href="#sommaire">Logiciel de pilotage PC &lt;-&gt; machine</a><a class="headerlink" href="#logiciel-de-pilotage-pc-machine" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="ugs-ou-universal-gcode-sender">
+<h3><a class="toc-backref" href="#sommaire">UGS ou  Universal gcode Sender</a><a class="headerlink" href="#ugs-ou-universal-gcode-sender" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Universal G-Code Sender</p>
+<p>Logiciel écrit en java, ne s’installe pas vraiment il faut lancer l’exécutable dans <code class="docutils literal notranslate"><span class="pre">$rep$\ugsplatform-win\bin</span></code></p>
+<p><a class="reference external" href="https://github.com/winder/Universal-G-Code-Sender#downloads">Site officiel pour le téléchargement</a> <a class="footnote-reference brackets" href="#id32" id="id33">16</a></p>
+<p>dl dans : 04-realisation (install par copier/coller dans c:/program/ugsplatform-win), lancer directement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ugsplatform</span><span class="o">-</span><span class="n">win</span>\<span class="nb">bin</span>\<span class="n">ugsplatform64</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Dans le github, ce sont les sources mais il y a un lien en focntion de la plateform utilisée.</p>
+</div>
+<p><a class="reference external" href="https://winder.github.io/ugs_website/">Site de la doc de UGS</a> <a class="footnote-reference brackets" href="#id34" id="id35">17</a> le moins qu’on puisse dire c’est qu’il est pauvre !</p>
+<p>COM7, 115200 bd : ALARM !!! Pourquoi ? pace ke on avé po l’alim 12v</p>
+<p>jog faire depuis la position 0, des Y-, des X- et des Z- (vers l’arrière, vers la gauche
+et vers le bas)</p>
+<p>Cours maximum: X -300mm, Y-210</p>
+<div class="section" id="alarm">
+<h4><a class="toc-backref" href="#sommaire">ALARM</a><a class="headerlink" href="#alarm" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Pour virer l’alarm soit le bouton unlock soit la commande $X</p>
+</div>
+<div class="section" id="telecommande-a-base-de-pave-numerique">
+<h4><a class="toc-backref" href="#sommaire">Télécommande à base de pavé numérique</a><a class="headerlink" href="#telecommande-a-base-de-pave-numerique" title="Lien permanent vers ce titre">¶</a></h4>
+<p>L’idée est de fair ce qui est décrit dans cette vidéo : <a class="reference external" href="https://www.youtube.com/watch?v=5PjfRAFjaRE">HOW TO: Keypad Pendant with UGS for BobsCNC</a> <a class="footnote-reference brackets" href="#id36" id="id37">18</a></p>
+<p>Problématique : comment de pas affecter les touche numérique au commande ce qui interdit alors de
+saisir des nombres ?</p>
+<p><a class="reference external" href="https://www.instructables.com/USB-Pendant-for-Universal-G-Code-Sender-UGS-for-CN/">USB Pendant for Universal Gcode Sender (UGS) for CNC Machining</a> <a class="footnote-reference brackets" href="#id38" id="id39">19</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;unassigned&gt;  :  \\?\HID#VID_05A4&amp;PID_9840#6&amp;CE7F884&amp;0&amp;0000#{884B96C3-56EF-11D1-BC8C-00A0C91405DD} [47645033] :  keyboard
+</pre></div>
+</div>
+<p>Avec un pavé numérique simple on ne peut pas capturer le code des touche : pavé testé:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TARGUS</span> <span class="n">AKP10EU</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/TARGUS_AKP10EU.jpg"><img alt="_images/TARGUS_AKP10EU.jpg" src="_images/TARGUS_AKP10EU.jpg" style="width: 300px;" /></a>
+</div>
+</div>
+<div class="section" id="bcnc">
+<h3><a class="toc-backref" href="#sommaire">bCnC</a><a class="headerlink" href="#bcnc" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Premier point <a class="reference external" href="https://fablabo.net/wiki/BCNC">Wiki en français assez complet sur fablabo</a> <a class="footnote-reference brackets" href="#id40" id="id41">20</a>.</p>
+<p>Il y a un github</p>
+<p>Visiblement c’est full Python.</p>
+<p>Installé le 3/7/21 : pip install bCnC</p>
+<p>Lancement python -m bCNC</p>
+</div>
+<div class="section" id="linuxcnc">
+<h3><a class="toc-backref" href="#sommaire">LinuxCNC</a><a class="headerlink" href="#linuxcnc" title="Lien permanent vers ce titre">¶</a></h3>
+<p><a class="reference external" href="http://linuxcnc.org/docs/html/gcode.html">http://linuxcnc.org/docs/html/gcode.html</a></p>
+</div>
+<div class="section" id="autres">
+<h3><a class="toc-backref" href="#sommaire">Autres</a><a class="headerlink" href="#autres" title="Lien permanent vers ce titre">¶</a></h3>
+<ul class="simple">
+<li><p>Mach3</p></li>
+<li><p>grblControl</p></li>
+<li><p><a class="reference external" href="https://www.estlcam.de/">Estlcam</a> <a class="footnote-reference brackets" href="#id42" id="id43">21</a> version gratuite et payante 49€</p></li>
+</ul>
+<div class="section" id="candle">
+<h4><a class="toc-backref" href="#sommaire">CANDLE</a><a class="headerlink" href="#candle" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Candle: <a class="reference external" href="https://github.com/Denvi/Candle">https://github.com/Denvi/Candle</a></p>
+</div>
+<div class="section" id="camotics-simulateur">
+<h4><a class="toc-backref" href="#sommaire">CAMOTICS Simulateur</a><a class="headerlink" href="#camotics-simulateur" title="Lien permanent vers ce titre">¶</a></h4>
+<p><a class="reference external" href="https://camotics.org">https://camotics.org</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="generation-du-g-code">
+<h2><a class="toc-backref" href="#sommaire">Génération du G-code</a><a class="headerlink" href="#generation-du-g-code" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="procedure-inkscape">
+<h3><a class="toc-backref" href="#sommaire">Procédure INKSCAPE</a><a class="headerlink" href="#procedure-inkscape" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Tracer: classique Inkscape puis sauver le ficher (sous un autre nom c’est mieux pour gcode tools)</p>
+<p>plugin gcode tools site en russe ! <a class="reference external" href="https://cnc-club.ru/gcodetools/">https://cnc-club.ru/gcodetools/</a></p>
+<p>site <a class="reference external" href="https://openlab.utbm.fr/docs/generer-un-g-code-avec-inkscape/">tuto GÉNÉRER UN G-CODE AVEC INKSCAPE</a> <a class="footnote-reference brackets" href="#id44" id="id45">22</a></p>
+<p><a class="reference external" href="https://www.cnc-club.ru/forum/viewforum.php?f=33">forum en anglais</a> <a class="footnote-reference brackets" href="#id46" id="id47">23</a></p>
+<p>Faire un miroir pour notre machine. sélectionner tous les chemins.</p>
+<p>Extension/gcodetools :</p>
+<ol class="arabic simple">
+<li><p>points d’orientation (mode 2 ou 3 points ! Prof Z 0.2)</p></li>
+<li><p>Bibliothèque d’outils =&gt; crée du texte : shape ? W ?</p></li>
+<li><p>Chemin vers g-code</p></li>
+</ol>
+</div>
+<div class="section" id="avec-estlcam">
+<h3><a class="toc-backref" href="#sommaire">Avec Estlcam</a><a class="headerlink" href="#avec-estlcam" title="Lien permanent vers ce titre">¶</a></h3>
+<p>A venir… (19/3/22)</p>
+</div>
+</div>
+<div class="section" id="depuis-carte-mentale">
+<h2><a class="toc-backref" href="#sommaire">Depuis carte mentale</a><a class="headerlink" href="#depuis-carte-mentale" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Aspect logiciel
+    MACH3
+    LINUXCNC
+    CNCDrive
+    https://www.masso.com.au/product-category/masso-cnc-controllers/
+    Raspberry Pi CNC Controller
+        https://www.youtube.com/watch?v=u35L0jGCqFc
+        ne génère pas le G-code, passe par fusion360
+    OpenCNC
+    https://cnc.js.org/
+    https://www.inventables.com/technologies/easel
+    Machinekit
+        http://www.machinekit.io/
+    Y parait qu&#39;on peut faire depuis freecad !!!
+</pre></div>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/gnea/grbl-Mega">https://github.com/gnea/grbl-Mega</a></p>
+</dd>
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/winder/Universal-G-Code-Sender">https://github.com/winder/Universal-G-Code-Sender</a></p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id6">3</a></span></dt>
+<dd><p><a class="reference external" href="https://www.vectric.com/purchase/aspire">https://www.vectric.com/purchase/aspire</a></p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id8">4</a></span></dt>
+<dd><p><a class="reference external" href="https://www.youtube.com/watch?v=KZNaejo5fGM">https://www.youtube.com/watch?v=KZNaejo5fGM</a></p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id10">5</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands">https://github.com/gnea/grbl/wiki/Grbl-v1.1-Commands</a></p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">6</span><span class="fn-backref">(<a href="#id12">1</a>,<a href="#id23">2</a>)</span></dt>
+<dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration">https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration</a></p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id14">7</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/gnea/grbl">https://github.com/gnea/grbl</a></p>
+</dd>
+<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id16">8</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/gnea/grbl/wiki">https://github.com/gnea/grbl/wiki</a></p>
+</dd>
+<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id18">9</a></span></dt>
+<dd><p><a class="reference external" href="https://www.youtube.com/watch?v=AwQZh1lPpv8">https://www.youtube.com/watch?v=AwQZh1lPpv8</a></p>
+</dd>
+<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id20">10</a></span></dt>
+<dd><p><a class="reference external" href="https://diymachining.com/grbl-steps-per-mm/">https://diymachining.com/grbl-steps-per-mm/</a></p>
+</dd>
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id22">11</a></span></dt>
+<dd><p><a class="reference external" href="http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf">http://www.diymachining.com/downloads/GRBL_Settings_Pocket_Guide_Rev_B.pdf</a></p>
+</dd>
+<dt class="label" id="id24"><span class="brackets"><a class="fn-backref" href="#id25">12</a></span></dt>
+<dd><p><a class="reference external" href="http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration">http://lesporteslogiques.net/wiki/outil/cnc_colinbus-configuration</a></p>
+</dd>
+<dt class="label" id="id26"><span class="brackets"><a class="fn-backref" href="#id27">13</a></span></dt>
+<dd><p><a class="reference external" href="https://marlinfw.org/">https://marlinfw.org/</a></p>
+</dd>
+<dt class="label" id="id28"><span class="brackets"><a class="fn-backref" href="#id29">14</a></span></dt>
+<dd><p><a class="reference external" href="https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/">https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/</a></p>
+</dd>
+<dt class="label" id="id30"><span class="brackets"><a class="fn-backref" href="#id31">15</a></span></dt>
+<dd><p><a class="reference external" href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/</a></p>
+</dd>
+<dt class="label" id="id32"><span class="brackets"><a class="fn-backref" href="#id33">16</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/winder/Universal-G-Code-Sender#downloads">https://github.com/winder/Universal-G-Code-Sender#downloads</a></p>
+</dd>
+<dt class="label" id="id34"><span class="brackets"><a class="fn-backref" href="#id35">17</a></span></dt>
+<dd><p><a class="reference external" href="https://winder.github.io/ugs_website/">https://winder.github.io/ugs_website/</a></p>
+</dd>
+<dt class="label" id="id36"><span class="brackets"><a class="fn-backref" href="#id37">18</a></span></dt>
+<dd><p><a class="reference external" href="https://www.youtube.com/watch?v=5PjfRAFjaRE">https://www.youtube.com/watch?v=5PjfRAFjaRE</a></p>
+</dd>
+<dt class="label" id="id38"><span class="brackets"><a class="fn-backref" href="#id39">19</a></span></dt>
+<dd><p><a class="reference external" href="https://www.instructables.com/USB-Pendant-for-Universal-G-Code-Sender-UGS-for-CN/">https://www.instructables.com/USB-Pendant-for-Universal-G-Code-Sender-UGS-for-CN/</a></p>
+</dd>
+<dt class="label" id="id40"><span class="brackets"><a class="fn-backref" href="#id41">20</a></span></dt>
+<dd><p><a class="reference external" href="https://fablabo.net/wiki/BCNC">https://fablabo.net/wiki/BCNC</a></p>
+</dd>
+<dt class="label" id="id42"><span class="brackets"><a class="fn-backref" href="#id43">21</a></span></dt>
+<dd><p><a class="reference external" href="https://www.estlcam.de/">https://www.estlcam.de/</a></p>
+</dd>
+<dt class="label" id="id44"><span class="brackets"><a class="fn-backref" href="#id45">22</a></span></dt>
+<dd><p><a class="reference external" href="https://openlab.utbm.fr/docs/generer-un-g-code-avec-inkscape/">https://openlab.utbm.fr/docs/generer-un-g-code-avec-inkscape/</a></p>
+</dd>
+<dt class="label" id="id46"><span class="brackets"><a class="fn-backref" href="#id47">23</a></span></dt>
+<dd><p><a class="reference external" href="https://www.cnc-club.ru/forum/viewforum.php?f=33">https://www.cnc-club.ru/forum/viewforum.php?f=33</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="materiaux.html" class="btn btn-neutral float-right" title="Matérieux" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="electronique.html" class="btn btn-neutral float-left" title="Electronique" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Gilles et Joel
+
+    </p>
+  </div>
+    
+    
+    
+    Compilé avec <a href="http://sphinx-doc.org/">Sphinx</a> en utilisant un
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">thème</a>
+    
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

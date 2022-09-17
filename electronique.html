@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Electronique &mdash; Documentation VoLAB CNC2020 </title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Logiciels" href="logiciel.html" />
+    <link rel="prev" title="Mécanique" href="mecanique.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> VoLAB CNC2020
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tables des matières</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="presentation.html">Presentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mecanique.html">Mécanique</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Electronique</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#criteres-de-choix-carte-controleur">Critères de choix carte contrôleur</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nombre-d-actionneurs-souhaites">Nombre d’actionneurs souhaités</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-de-connection">Type de connection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quelques-references-de-cartes">Quelques références de cartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nouvel-architecture-electronique-grbl-32bits">Nouvel architecture électronique GRBL 32bits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remplacement-esp-32">Remplacement ESP-32</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#palpeur-outil">Palpeur outil</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ecueil-n-7-pb-axe-x-le-29-01-2022">Écueil n° 7 : Pb axe X le 29/01/2022</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#choix-drivers-moteurs">Choix drivers moteurs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nouvelles-cartes-de-puissance">Nouvelles cartes de puissance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#commande-g-code-utile-pour-les-essais">Commande G-code utile pour les essais</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alimentation">Alimentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#alimentation-de-la-charlie-robot">Alimentation de la Charlie Robot</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adaptation-de-la-carte-mks-gen-1-4">Adaptation de la carte MKS Gen 1.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#brochage">Brochage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dimensions">Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#essais-des-moteurs">Essais des moteurs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#carac-moteurs">Carac moteurs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avec-un-arduino">Avec un ARDUINO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#carte-d-interface-isel">Carte d’interface ISEL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#essais-sur-banc">Essais sur banc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#connectique">Connectique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#endstop-story">Endstop story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nouveau-cablage-moteurs-mai-2022">Nouveau câblage moteurs : Mai 2022</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logiciel.html">Logiciels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materiaux.html">Matérieux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avancement.html">Avancement travaux CNC</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VoLAB CNC2020</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Electronique</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/electronique.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="electronique">
+<h1>Electronique<a class="headerlink" href="#electronique" title="Lien permanent vers ce titre">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Auteur</dt>
+<dd class="field-odd"><p>J.Soranzo</p>
+</dd>
+<dt class="field-even">Date</dt>
+<dd class="field-even"><p>Octobre 2020</p>
+</dd>
+<dt class="field-odd">MàJ</dt>
+<dd class="field-odd"><p>17/09/2022</p>
+</dd>
+<dt class="field-even">Societe</dt>
+<dd class="field-even"><p>VoRoBoTics</p>
+</dd>
+<dt class="field-odd">Entity</dt>
+<dd class="field-odd"><p>VoLAB</p>
+</dd>
+</dl>
+<div class="section" id="criteres-de-choix-carte-controleur">
+<h2>Critères de choix carte contrôleur<a class="headerlink" href="#criteres-de-choix-carte-controleur" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="nombre-d-actionneurs-souhaites">
+<h3>Nombre d’actionneurs souhaités<a class="headerlink" href="#nombre-d-actionneurs-souhaites" title="Lien permanent vers ce titre">¶</a></h3>
+<p>les évidents : 3 axes steper motor X, Y et Z</p>
+<p>La broche:</p>
+<ul class="simple">
+<li><p>pwm</p></li>
+<li><p>vfd</p></li>
+<li><p>ou pas de commande électonique: manuelle</p></li>
+<li><p>speed</p></li>
+<li><p>direction</p></li>
+</ul>
+<p>Les optionnels:</p>
+<ul class="simple">
+<li><p>Aspiration</p></li>
+<li><p>lubrifiant</p></li>
+<li><p>probe input</p></li>
+</ul>
+</div>
+<div class="section" id="type-de-connection">
+<h3>Type de connection<a class="headerlink" href="#type-de-connection" title="Lien permanent vers ce titre">¶</a></h3>
+<ul class="simple">
+<li><p>direct câble au PC</p></li>
+<li><p>wifi</p></li>
+<li><p>Ethernet</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="quelques-references-de-cartes">
+<h2>Quelques références de cartes<a class="headerlink" href="#quelques-references-de-cartes" title="Lien permanent vers ce titre">¶</a></h2>
+<p><a class="reference external" href="https://www.banggood.com/Duet-Wifi-V1_03-Upgraded-Mainboard-With-5-inch-PanelDue-Color-Touch-Screen-For-3D-Printer-p-1387578.html?gmcCountry=FR&amp;currency=EUR&amp;createTmp=1&amp;utm_source=googleshopping&amp;utm_medium=cpc_bgs&amp;utm_content=frank&amp;utm_campaign=frank-ssc-fr-all-0508&amp;ad_id=434644724085&amp;gclid=Cj0KCQjwwuD7BRDBARIsAK_5YhVNobP684zjggoVnhg7Q74QKQbxZc9e9BqFd-Cy8mPwStP2Q6c0jygaAlueEALw_wcB&amp;cur_warehouse=CN">Duet wifi V1.03 chez Banggood</a></p>
+<p><a class="reference external" href="https://www.pibot.com/cnc-store/cnc-electronic">CNC Electronic chez Pibot</a></p>
+<p><a class="reference external" href="https://reprap.org/wiki/MKS_GEN">Repraps MKS Gen v1.4</a></p>
+<p>Câblage des fin de course en mode normalement fermés. Déssoudage des cables sur les cartelettes et
+soudure directe sur les fc</p>
+</div>
+<div class="section" id="nouvel-architecture-electronique-grbl-32bits">
+<h2>Nouvel architecture électronique GRBL 32bits<a class="headerlink" href="#nouvel-architecture-electronique-grbl-32bits" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Voir le <a class="reference internal" href="logiciel.html#grbl32soft"><span class="std std-ref">chapitre logiciel</span></a>.</p>
+<p>D’un point de vue hardware pas grand chose à dire. Achat et câblage conformément au site officiel</p>
+<p>Site : <a class="reference external" href="https://www.makerfr.com/cnc/grbl-32bits-board-v2/liste-des-pieces-grbl-32bits-board-v2-0/">GRBL 32bits Board V2.0</a></p>
+<p>Fin de course avec les cartes habituellement utilisées poour les imprimantes 3D : on n’en utilise
+que le switch en se soudant directement dessus.</p>
+<p>Sur les 3 axes 1 seul Z n’a pas fonctionné. Nous avons coupé une des broche du switch pour la
+déconnecter de la carte et se souder directement dessus afin de ne plus être perturbé et
+cela fonctionne.</p>
+<p>Explication: sur ce type de firmware les fins de course sont de type contact normalement fermé.
+Pas de carte d’interface nécessaire juste un contact on lui envoie du 5V et il ouvre à la masse donc
+ce 5V peut alimenter la carte d’interface si on ne prend pas garde au sens des 2 fils utilisés.
+On les a mis dans le bon sens pour X et Y et pas de chance pour Z. Plutôt que de couper la broche
+on aurait pu permuter simplement les 2 fils en entrée de carte.</p>
+<p>Autre problème le fonctionne: le Nunchuck qui ne fonctionne pas. D’après une expertise sur une autre
+carte ESP avec exemple ARDUINO simple, on n’obtient pas de résultats encourageant. Visiblement les
+librairies sont taillées pour un Nunchuck officiel. Voir <a class="reference internal" href="logiciel.html#ecueilsoft5"><span class="std std-ref">Écueil logiciel 5</span></a></p>
+</div>
+<div class="section" id="remplacement-esp-32">
+<h2>Remplacement ESP-32<a class="headerlink" href="#remplacement-esp-32" title="Lien permanent vers ce titre">¶</a></h2>
+<a class="reference internal image-reference" href="_images/ESP32-38_PIN-DEVBOARD.png"><img alt="_images/ESP32-38_PIN-DEVBOARD.png" src="_images/ESP32-38_PIN-DEVBOARD.png" style="width: 300px;" /></a>
+<p>ESP32 dev board 38 pin sur la carte GRBL 32</p>
+<p>Il existe également des ESP 32 dev board 30 pin attention !</p>
+<div class="section" id="palpeur-outil">
+<h3>Palpeur outil<a class="headerlink" href="#palpeur-outil" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Passe par un bouton personnalisé donc : <a class="reference external" href="https://www.makerfr.com/cnc/grbl-32bits-board-v2/mode-demploi-du-tft-v2/creer-des-boutons-personnalises/">Créer des boutons personnalisé</a></p>
+</div>
+<div class="section" id="ecueil-n-7-pb-axe-x-le-29-01-2022">
+<h3>Écueil n° 7 : Pb axe X le 29/01/2022<a class="headerlink" href="#ecueil-n-7-pb-axe-x-le-29-01-2022" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lors des premiers essais de gravure pb sur l’axe X seulement. Ne semblent pas correspondre à une
+perte de pas mais plutôt un gain de pas !</p>
+<p>Driver de moteurs échangés entre axe X et Y: <strong>pas mieux</strong>. ventilation des drivers. Léger mieux</p>
+<p>A faire : remplacement moteur X par un de secours. Lubrification de l’axe (la tige filetée est collante)
+recâblage plus propre. <strong>pas mieux</strong></p>
+<p>Remplacement du moteur par un NEMA27 <strong>pas mieux</strong></p>
+<p>12/02/2022 : des pb d’incohérence de position subsistent.</p>
+<p>Essais de réduire l’accélération maximum dans GRBL de 80mm/s2 à 50 sur x et Y Z était déjà à 50.</p>
+<p>Mécaniquement double remplacment de la vis à bille pour revenir à celle d’origine qui semble être
+la meilleur de toutes celles à notre disposition</p>
+<p>$120 accel passée à 20 $110 : 550</p>
+<p>19/03/2022 : tout recâblé proprement. apparament pas mieux. Essai suivant : générer un G-CODE dans
+INSKAPE.</p>
+</div>
+</div>
+<div class="section" id="choix-drivers-moteurs">
+<span id="index-0"></span><h2>Choix drivers moteurs<a class="headerlink" href="#choix-drivers-moteurs" title="Lien permanent vers ce titre">¶</a></h2>
+<p>BL-TB6560-v2.0</p>
+<a class="reference internal image-reference" href="_images/TB6560.jpg"><img alt="_images/TB6560.jpg" src="_images/TB6560.jpg" style="width: 600px;" /></a>
+<p><a class="reference download internal" download="" href="_downloads/4e7205c167d37c3c68af3870ae7c1306/TB6560AHQ_datasheet_en_20141001-771503.pdf"><code class="xref download docutils literal notranslate"><span class="pre">TB6560</span> <span class="pre">datasheet</span></code></a></p>
+<p>How to connect to the main board ? Aucune information trouvées.</p>
+<p>Obligé de les reconstruire à partir des photos fournies sur leur Wiki (celui de la carte MKS Gen)</p>
+<p>Utiliser</p>
+<p>EN STEP dir et GND</p>
+<p>Pour l’axe X, cela donne:</p>
+<ul class="simple">
+<li><p>D38 : EN</p></li>
+<li><p>D54 : CLK</p></li>
+<li><p>D55 : DIR</p></li>
+</ul>
+<div class="section" id="nouvelles-cartes-de-puissance">
+<span id="index-1"></span><h3>Nouvelles cartes de puissance<a class="headerlink" href="#nouvelles-cartes-de-puissance" title="Lien permanent vers ce titre">¶</a></h3>
+<p><a class="reference external" href="https://www.amazon.fr/gp/product/B0711J1K66/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&amp;psc=1">TopDirect TB6600 Stepper Moteur Driver sur AMAZON</a></p>
+<a class="reference internal image-reference" href="_images/TB6560_amazon.jpg"><img alt="_images/TB6560_amazon.jpg" src="_images/TB6560_amazon.jpg" style="width: 600px;" /></a>
+<p>Plus de pertes de pas 3 axes vérifiés</p>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="commande-g-code-utile-pour-les-essais">
+<span id="index-2"></span><h2>Commande G-code utile pour les essais<a class="headerlink" href="#commande-g-code-utile-pour-les-essais" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Commande émise directement depuis ARDUINO IDE. Com speed pour Marlin : 250.000</p>
+<ul class="simple">
+<li><p>G1 X20</p></li>
+<li><p>G28 X : home X</p></li>
+<li><p>M119 : end stop - pas implémenté dans GRBL</p></li>
+<li><p>M115 : firmware</p></li>
+<li><p>M203 X15 : set feedrate à 15unit/s soit 15mm/s</p></li>
+<li><p>M18 : arrêt de tous les moteurs</p></li>
+<li><p>M203 Z10 : change feed rate (fréquence moteur)</p></li>
+</ul>
+<p>Sur le <a class="reference external" href="https://reprap.org/wiki/G-code/fr">site rep rap ;-)</a></p>
+</div>
+<div class="section" id="alimentation">
+<h2>Alimentation<a class="headerlink" href="#alimentation" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Carte MKS : 12V/24V</p>
+<p>Les TB6560 sont aussi en 24V</p>
+<div class="section" id="alimentation-de-la-charlie-robot">
+<h3>Alimentation de la Charlie Robot<a class="headerlink" href="#alimentation-de-la-charlie-robot" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="n">alimentation</span> <span class="n">sur</span> <span class="n">la</span> <span class="n">carte</span> <span class="n">ISEL</span> <span class="n">d</span><span class="s1">&#39;origine</span>
+    <span class="n">Un</span> <span class="n">transfo</span> <span class="n">taurique</span> <span class="mi">28</span><span class="n">V</span><span class="o">/</span><span class="mi">3</span><span class="n">A</span> <span class="n">et</span> <span class="mi">9</span><span class="n">Vefficace</span><span class="o">/</span><span class="mi">1</span><span class="n">A</span> <span class="n">soit</span> <span class="mf">12.7</span><span class="n">Vmax</span>
+    <span class="n">LV</span> <span class="p">:</span> <span class="n">fus</span> <span class="n">de</span> <span class="mf">1.5</span><span class="n">A</span> <span class="n">LM317</span> <span class="n">muni</span> <span class="n">d</span><span class="s1">&#39;un pont diviseur 733, 234ohm au gnd soit</span>
+            <span class="mf">1.25</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">733</span><span class="o">/</span><span class="mi">234</span><span class="p">)</span><span class="o">=</span><span class="mf">5.16</span><span class="n">V</span>
+        <span class="n">A</span> <span class="n">modifier</span> <span class="n">pour</span> <span class="n">sortir</span> <span class="n">plus</span>
+        <span class="n">piquer</span> <span class="n">directement</span> <span class="n">le</span> <span class="n">Vin</span> <span class="n">du</span> <span class="n">régulateur</span> <span class="n">pour</span> <span class="n">l</span><span class="s1">&#39;envoyer à la carte MKS</span>
+        <span class="n">ou</span> <span class="n">alors</span> <span class="n">alimenter</span> <span class="n">la</span> <span class="n">carte</span> <span class="n">directement</span> <span class="n">en</span> <span class="mi">5</span><span class="n">V</span>
+    <span class="n">HV</span>
+        <span class="n">FUS</span> <span class="p">:</span> <span class="mf">6.3</span><span class="n">A</span><span class="p">,</span> <span class="n">Pas</span> <span class="n">de</span> <span class="n">régulateur</span> <span class="n">Mesurée</span> <span class="n">à</span> <span class="mi">39</span><span class="n">V</span> <span class="n">CC</span> <span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mf">1.414</span> <span class="o">=</span><span class="mf">39.6</span><span class="n">V</span><span class="p">)</span>
+<span class="n">Connecteur</span> <span class="n">vert</span>
+    <span class="n">Gros</span> <span class="n">dissipateur</span> <span class="n">vers</span> <span class="n">le</span> <span class="n">haut</span>
+    <span class="o">-</span> <span class="n">Low</span> <span class="n">voltage</span>
+    <span class="o">+</span> <span class="n">low</span> <span class="n">voltage</span>
+    <span class="n">NC</span>
+    <span class="n">NC</span>
+    <span class="o">-</span> <span class="n">High</span> <span class="n">voltage</span>
+    <span class="o">+</span> <span class="n">High</span> <span class="n">voltage</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="adaptation-de-la-carte-mks-gen-1-4">
+<h2>Adaptation de la carte MKS Gen 1.4<a class="headerlink" href="#adaptation-de-la-carte-mks-gen-1-4" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Choix de cette carte car disponible dans le fablab Volab. Carte à base de 2560 donc 8 bits.</p>
+<p><a class="reference external" href="https://reprap.org/wiki/MKS_GEN">Wiki MKS Gen 1.4</a></p>
+<div class="section" id="brochage">
+<h3>Brochage<a class="headerlink" href="#brochage" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pinout:</p>
+<a class="reference internal image-reference" href="_images/MksGenV14-Pinout.png"><img alt="_images/MksGenV14-Pinout.png" src="_images/MksGenV14-Pinout.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="dimensions">
+<h3>Dimensions<a class="headerlink" href="#dimensions" title="Lien permanent vers ce titre">¶</a></h3>
+<a class="reference internal image-reference" href="_images/mksGen14_size.png"><img alt="_images/mksGen14_size.png" src="_images/mksGen14_size.png" style="width: 600px;" /></a>
+</div>
+</div>
+<div class="section" id="essais-des-moteurs">
+<h2>Essais des moteurs<a class="headerlink" href="#essais-des-moteurs" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="carac-moteurs">
+<h3>Carac moteurs<a class="headerlink" href="#carac-moteurs" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Brochage des moteurs:  référence des moteurs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ECM268</span><span class="o">-</span><span class="n">E2</span><span class="o">.</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="mi">1</span>
+<span class="mi">473030</span>
+<span class="n">DC</span> <span class="mf">2.8</span><span class="n">V</span> <span class="n">UNI</span> <span class="mf">2.8</span><span class="n">A</span> <span class="n">BI4</span><span class="o">.</span><span class="mi">0</span><span class="n">A</span>
+</pre></div>
+</div>
+<p>473030 est équivalent au MS-110</p>
+<p><a class="reference download internal" download="" href="_downloads/0ac3cfa6374f37ff5be8c168e342d04f/970473 DM102 - 49 2009 MS 110-160-160W_engl.pdf"><code class="xref download docutils literal notranslate"><span class="pre">datasheet</span></code></a></p>
+<a class="reference internal image-reference" href="_images/coupleVsFreqMoteur.jpg"><img alt="_images/coupleVsFreqMoteur.jpg" src="_images/coupleVsFreqMoteur.jpg" style="width: 600px;" /></a>
+<p>1.8°/pas soit 200pas par tour</p>
+</div>
+<div class="section" id="avec-un-arduino">
+<h3>Avec un ARDUINO<a class="headerlink" href="#avec-un-arduino" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Exemple ARDUINO directe.</p>
+<p>Suite essais avec Marlin, on revient aux tests directes avec ARD.</p>
+<p>Quel exemple ??? J’ai copié le répertoire stepper dans le compte projet sous 01-maquettageFaisabilite</p>
+<p>Essai RS à 250kbauds pour gerder la même vitesse RS que Grbl. Exemple stepper_oneevolution</p>
+<p>Retouche au début du fichier:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Stepper</span> <span class="nf">myStepper</span><span class="p">(</span><span class="n">stepsPerRevolution</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Nous on a:</p>
+<ul class="simple">
+<li><p>D38 : EN</p></li>
+<li><p>D54 : CLK</p></li>
+<li><p>D55 : DIR</p></li>
+</ul>
+<p>Il semblerait que cet exemple ARDUINO soit fait pour piloter directement les bobines donc cela
+n’est probablement pas celui là que nous avions utilisé…</p>
+<p>Dans carnet de croquis, il y a JsZstepperA4988:</p>
+<p>Essais concluant, le moteur tourne en continu. durée des step 2x1ms (500Hz). Essais à 0.6ms ok
+à 2x500us (1KHz) tourne rond, au delà non</p>
+<p><strong>Important</strong> sous 24V (essais jusqu’à 30v) sur la datasheet et la courbe ci-dessus on a 63V.
+Attention toutefois la carte MKS ne supporte que du 12/24V mais la tension des moteurs reste
+au niveau des cartes TB6560</p>
+<p>Aujourd’hui, 13/3/2021, j’ai retrouvé le répertoire des essais précédent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0017</span><span class="o">-</span><span class="n">CNC</span>\<span class="n">projet</span>\<span class="mi">03</span><span class="o">-</span><span class="n">conception</span>\<span class="mi">2020</span>\<span class="n">testMoteur</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="carte-d-interface-isel">
+<h3>Carte d’interface ISEL<a class="headerlink" href="#carte-d-interface-isel" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La petite carte sur les moteurs:</p>
+<ul class="simple">
+<li><p>black - orange/white</p></li>
+<li><p>orange - black/white</p></li>
+<li><p>red - yellow/white</p></li>
+<li><p>yellow - red/white</p></li>
+</ul>
+<p>Donc d’après la datasheet du moteur, on relie (1,3) et (2,4) donc mise en // des bobine et (5,7)
+et (6,8).</p>
+<ul class="simple">
+<li><p>Bobine 1 : black-orange</p></li>
+<li><p>Bobine 2 : red-yellow</p></li>
+</ul>
+</div>
+<div class="section" id="essais-sur-banc">
+<h3>Essais sur banc<a class="headerlink" href="#essais-sur-banc" title="Lien permanent vers ce titre">¶</a></h3>
+<p>L’alimentation des moteurs avec une alimentation stabilisée 24V 3A n’a pas été concluante.</p>
+<p>29/5/2021: pb constaté sur l’axe Z, en croisant la voie X et la voie Z on s’apperçois que cela
+proviendrait de la loi de commande du moteur. On essayant diffrentes configuratiopn de la carte
+TB6560 pas d’amélioration. On décide de remonter tout et de voir par la suite avec GRBL.</p>
+<p>Juin 2021:</p>
+<p>Problème de homing de l’axe Y : <a class="reference internal" href="logiciel.html#pbhomingy"><span class="std std-ref">voir dans la partie logiciel</span></a></p>
+<p>Nouvelle essai du <strong>04/09/2021</strong>
+Conditions d’essais: Grbl 1.110-160-160W_engl, UGS v2..0.8, carte MKS, TB6560
+Avec une alim stabilisée 30V/3A : les moteurs ne démarrent même pas.</p>
+<p>Essais avec une alim de PC 19V/4.73A fonctionnelle mais encore des pertes de pas 16/100 environ
+aléatoire. Nous avons remarquer des vis qui pourrais géner la descente.</p>
+<p>Recherche google grbl perte de pas</p>
+<ul class="simple">
+<li><p>$1 : Step idle delay, milliseconds</p></li>
+<li><p>$112 : max speed Z</p></li>
+<li><p>$122 : accel Z</p></li>
+</ul>
+<p>Aucun des essais mené n’a permis de ne pas avoir de perte de pas sauf le couple 20,100 (acc, vit)</p>
+<p>Essais alim 40V concluant mais pas meilleur au niveau de la précision.</p>
+<p><strong>Todo remplacer carte moteur X</strong> : fait le 11/09/2021</p>
+<p>La LED fin de course X ne s’allume pas.</p>
+</div>
+</div>
+<div class="section" id="connectique">
+<h2>Connectique<a class="headerlink" href="#connectique" title="Lien permanent vers ce titre">¶</a></h2>
+<p>SUB D 9 contacts</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 24%" />
+<col style="width: 27%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>broche</p></th>
+<th class="head"><p>signal</p></th>
+<th class="head"><p>Carte moteur</p></th>
+<th class="head"><p>Cable réseau</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>A+</p></td>
+<td><p>black</p></td>
+<td><p>bleu</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>A-</p></td>
+<td><p>orange</p></td>
+<td><p>orange</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>FCMin</p></td>
+<td></td>
+<td><p>blanc maron</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>P5V</p></td>
+<td></td>
+<td><p>vert</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>B+</p></td>
+<td><p>red</p></td>
+<td><p>orange/blanc</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>B-</p></td>
+<td><p>yellow</p></td>
+<td><p>blanc/bleu</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>FCmax</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>GND</p></td>
+<td></td>
+<td><p>maron</p></td>
+</tr>
+</tbody>
+</table>
+<p>Côté contrôleur : broche femelle.</p>
+<a class="reference internal image-reference" href="_images/db9Pinout.svg"><img alt="_images/db9Pinout.svg" src="_images/db9Pinout.svg" width="200px" /></a>
+</div>
+<div class="section" id="endstop-story">
+<h2>Endstop story<a class="headerlink" href="#endstop-story" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="figure align-center" id="id1" style="width: 100%">
+<a class="reference internal image-reference" href="_images/endstopschematic.jpg"><img alt="_images/endstopschematic.jpg" src="_images/endstopschematic.jpg" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">Schema endstop</span><a class="headerlink" href="#id1" title="Lien permanent vers cette image">¶</a></p>
+</div>
+<p id="index-3">Question du jour ? lire l’état des endstops</p>
+<p>Dans g-code sender : menu Machin, command set wizard…</p>
+<a class="reference internal image-reference" href="_images/endstopChecking001.jpg"><img alt="_images/endstopChecking001.jpg" src="_images/endstopChecking001.jpg" style="width: 300px;" /></a>
+<p>puis next, next, next…</p>
+<a class="reference internal image-reference" href="_images/endstopChecking002.jpg"><img alt="_images/endstopChecking002.jpg" src="_images/endstopChecking002.jpg" style="width: 300px;" /></a>
+</div>
+<div class="section" id="nouveau-cablage-moteurs-mai-2022">
+<h2>Nouveau câblage moteurs : Mai 2022<a class="headerlink" href="#nouveau-cablage-moteurs-mai-2022" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Augmentation de la section des fils, un cable par moteur sans endstop.
+Tous les enstop regroupés dans une seule SUB D 9points.</p>
+<p>mettre photo.</p>
+<p>Essais du 27/5/22 : fonctionnement correcte, essais de gravure <strong>OK</strong></p>
+<a class="reference internal image-reference" href="_images/connecteursXYZ.JPG"><img alt="_images/connecteursXYZ.JPG" src="_images/connecteursXYZ.JPG" style="width: 300px;" /></a>
+<div class="figure align-center" id="id2">
+<span id="index-4"></span><a class="reference internal image-reference" href="_images/cablageEndStopMai2022.jpg"><img alt="_images/cablageEndStopMai2022.jpg" src="_images/cablageEndStopMai2022.jpg" style="width: 300px;" /></a>
+<p class="caption"><span class="caption-text">Nouveau connecteur endstops</span><a class="headerlink" href="#id2" title="Lien permanent vers cette image">¶</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="logiciel.html" class="btn btn-neutral float-right" title="Logiciels" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mecanique.html" class="btn btn-neutral float-left" title="Mécanique" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Précédent</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Gilles et Joel
+
+    </p>
+  </div>
+    
+    
+    
+    Compilé avec <a href="http://sphinx-doc.org/">Sphinx</a> en utilisant un
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">thème</a>
+    
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
