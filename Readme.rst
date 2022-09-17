@@ -6,7 +6,7 @@ CNC Volab
 :Site_Web:             http://www.vorobotics.com/
 :Projet:               CNCN Volab.
 :Version:              2022
-:documentation:        
+:documentation:        https://volab.github.io/CNC_VoLAB/
 :Licence:              CC0 4.0
 :Liens:                https://creativecommons.org/licenses
 
