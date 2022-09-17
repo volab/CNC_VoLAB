@@ -1,0 +1,76 @@
+## [ .gitignore ]
+
+## Liste des fichiers et dossiers � ignorer
+
+#.gitignore
+
+# au cas o� on d�cide de supprimer *.json
+# fichier contenant des credentials 
+credentials.json
+cred*.json
+credential.json
+
+## [ Dossiers a ignorer ]
+/00-avantProjet
+/04-realisation
+/01-maquettageFaisabilite
+/08-rushs/01-texts
+/08-rushs/03-video
+/03-conception
+
+**/99-*/
+*_v/
+*_build/
+__pycache__
+
+
+## [ listes des extentions a ignorer ]
+*.FCStd1
+*.264
+*.mkv
+*.mp4
+#*.json
+*.ffs_db
+*.bak
+
+
+## Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+
+## Packages
+*.7z
+*.dmg
+#*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+## Logs and databases
+*.log
+*.sql
+*.sqlite
+
+
+## OS generated files
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+.*.swp
+*~
+*.lock
+*.out
+*.ffs_db
+
+
+
+
