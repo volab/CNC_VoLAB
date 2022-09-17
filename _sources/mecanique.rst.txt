@@ -7,8 +7,7 @@ Mécanique
 :Societe: VoRoBoTics
 :Entity: VoLAB
 
-.. contents::
-    :backlinks: top
+
 
 ====================================================================================================
 Profilés
