@@ -7,8 +7,7 @@ Logiciels
 :Societe: VoRoBoTics
 :Entity: VoLAB
 
-.. contents::
-    :backlinks: top
+
 
 ====================================================================================================
 Choix
@@ -41,9 +40,87 @@ Autre Logiciel
 
 Payant mais avec une version free trial pas limité dans le temps. Coûte 2160€
 
+====================================================================================================
+Notre démarche
+====================================================================================================
+
+Dans un premier temps, nous avons utilisé Marlin afin de vérifier si nous étions en mesure de 
+piloter correctement les moteurs. Choix dicté par notre expérience avec les imprimantes 3D.
+
+Ensuite nous sommes passé à GRBL sur carte ARDUINO2560 car il nous semblait plus adapté à cette 
+utilisation et plus répandu dans la communauté des utilisateur de CNC.
+
+Nous avons rencontré des problèmes de pertes de pas sur l'axe X. Après de nombreux essais infructueux,
+nous sommes passé sur une carte à base d'ESP32 associé à GRBL32. Malheureusement cela a généré d'autres
+problèmes que nous avons résolus un à un. Mais la perte de pas était toujours présente.
+
+En désespoirs de cause nous sommes revenus à l'architecture initiale ARDUINO 2560 + GRBL.
+
+Nous avons fini par trouver la cause de notre problème : le microstepping des drivers de moteurs pas
+à pas.
+
+Ce serait intéressant de refaire le même genre de réglage avec GRBL32 !
+
+====================================================================================================
+Marlin
+====================================================================================================
+Site fort intéressant `Marlinfw.org`_
+
+.. _`Marlinfw.org` : https://marlinfw.org/
+
+Attention Marlin 2.x ne se compile qu'avec vsc et plateform io
+
+Donc implenté Marlin 1.1
+
+cf dossier::
+
+    04-realisation\Marlin-1.1.x
+
+Configuration:
+
+Dans configuration.h
+----------------------------------------------------------------------------------------------------
+Type de drivers ligne 550 environ
+
+définition du pining ???
+----------------------------------------------------------------------------------------------------
+Dans quel fichier ? En même temps on est compatible RAMPS: pins_RAMPS.h
+
+Modification des lignes:
+
+.. code:: cpp
+
+    #define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+    #define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+    #define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+
+    //...
+
+    #define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }
+
+    //.. pas encore touché
+    #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+
+J'ai passé le feedrate à 15unit/s en effet avec 80step/mm 80*15 = 1200 step/s
+
+Valeur max 17unit/s à 80pas/mm voir 16 (16*80=1280)
+
+Nos vis à billes auraient un pas de 39.78/10tour soit 4mm/tour les moteurs sont sur du 200pas/tours
+
+soit 50,27 pas/mm
+
+Config réelle 
+----------------------------------------------------------------------------------------------------
+le 22/05/2020, premier run moteur X tourne dans le mauvais sens. Nous avons permutté les fils des 
+bobines moteur côté carte TBmachin. X déplacement max théroique environ 300 mais marlin nous limite
+à 215mm
+
+Ligne 885 : ``#define X_BED_SIZE 300``
 
 
-
+Ressources
+----------------------------------------------------------------------------------------------------
+https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/
 
 
 ====================================================================================================
@@ -74,7 +151,7 @@ Mais aussi les `Grbl v1.1 Commands`_ : $X, $$, $G...
 
 .. _`Installation / Configuration GRBL 1/2 sur la chaîne CrazyMakers` : https://www.youtube.com/watch?v=AwQZh1lPpv8
 
-La procédure est géniale !!! Mais attention du coup les source se retrouve dans librairie Arduino !!!
+La procédure est géniale !!! Mais attention du coup les sources se retrouvent dans librairie Arduino !!!
 
 .. WARNING::
 
@@ -262,66 +339,7 @@ Essais::
     Y $101 : 1/4 microstep : 1-0-0 $101=201.080 axis travel resolution, step/mm
     Z $102 : 1/16 microstep : 0-0-1 $100=800.000 axis travel resolution, step/mm
 
-====================================================================================================
-Marlin
-====================================================================================================
-Site fort intéressant `Marlinfw.org`_
 
-.. _`Marlinfw.org` : https://marlinfw.org/
-
-Attention Marlin 2.x ne se compile qu'avec vsc et plateform io
-
-Donc implenté Marlin 1.1
-
-cf dossier::
-
-    04-realisation\Marlin-1.1.x
-
-Configuration:
-
-Dans configuration.h
-----------------------------------------------------------------------------------------------------
-Type de drivers ligne 550 environ
-
-définition du pining ???
-----------------------------------------------------------------------------------------------------
-Dans quel fichier ? En même temps on est compatible RAMPS: pins_RAMPS.h
-
-Modification des lignes:
-
-.. code:: cpp
-
-    #define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-    #define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-    #define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-
-    //...
-
-    #define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }
-
-    //.. pas encore touché
-    #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
-
-J'ai passé le feedrate à 15unit/s en effet avec 80step/mm 80*15 = 1200 step/s
-
-Valeur max 17unit/s à 80pas/mm voir 16 (16*80=1280)
-
-Nos vis à billes auraient un pas de 39.78/10tour soit 4mm/tour les moteurs sont sur du 200pas/tours
-
-soit 50,27 pas/mm
-
-Config réelle 
-----------------------------------------------------------------------------------------------------
-le 22/05/2020, premier run moteur X tourne dans le mauvais sens. Nous avons permutté les fils des 
-bobines moteur côté carte TBmachin. X déplacement max théroique environ 300 mais marlin nous limite
-à 215mm
-
-Ligne 885 : ``#define X_BED_SIZE 300``
-
-
-Ressources
-----------------------------------------------------------------------------------------------------
-https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/
 
 .. index::
     single: GRBL32
@@ -331,6 +349,11 @@ https://www.instructables.com/Set-Up-RAMPS-Arduino-Electronics-for-a-CNC-Router/
 ====================================================================================================
 Nouvel architecture électronique GRBL 32bits
 ====================================================================================================
+Introduction
+----------------------------------------------------------------------------------------------------
+Suite aux problèmes de pertes de pas sur l'axe X, nous avons décidé de changer d'électronique pour 
+passer sur une carte à base d'ESP32.
+
 Préparation
 ----------------------------------------------------------------------------------------------------
 
@@ -368,7 +391,7 @@ Liste des tests
 
 
 
-Écueil 1: upload index.html.gz impossible
+Écueil 1: upload index.html.gz impossible [RESOLU]
 ----------------------------------------------------------------------------------------------------
 Essais : Après **upload du fichier index.html.gz** de ``/data`` lors des premier essais l'écran dans 
 le navigateur restait bloqué sur Loading...
@@ -389,7 +412,7 @@ Pour cela il faut installer une extension dans ARDUINO :
 
 .. _`Install ESP32 Filesystem Uploader in Arduino IDE` : https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/
 
-Écueil 2 : écran blanc
+Écueil 2 : écran blanc [RESOLU]
 ----------------------------------------------------------------------------------------------------
 config.h pour l'écran
 
@@ -397,9 +420,9 @@ Si écran blanc alors ::
 
     #define TFT_CARD_VERSION 1 écrire 2
 
-Écueil 3 : pas de connection wifi
+Écueil 3 : pas de connection wifi[RESOLU]
 ----------------------------------------------------------------------------------------------------
-Pas de onnexion au WIFI. En branchant un terminal on voit juste après::
+Pas de connexion au WIFI. En branchant un terminal on voit juste après::
 
     [MSG:Mist coolant on pin GPIO(22) ]
 
@@ -408,7 +431,7 @@ Probablement pb d'antenne donc réception difficile
 .. NOTE:: Adresse ip fixée à 192.168.1.43
    :class: without-title
  
-Écueil 4 : pas de détection en HZ
+Écueil 4 : pas de détection en HZ [RESOLU]
 ----------------------------------------------------------------------------------------------------
 **08/01/2022** : Pas de détection du HZ
 
@@ -418,7 +441,7 @@ pb électronique ? **Solution** : coupé la broche du switch du petit pcb et sou
 
 .. _ecueilSoft5:
 
-Écueil 5 : Nunchuck non fonctionnel
+Écueil 5 : Nunchuck non fonctionnel [RESOLU - pb hardware]
 ----------------------------------------------------------------------------------------------------
 The I2C address of both Wii Nunchuks is 0x52.
 
@@ -433,8 +456,6 @@ Video à regarder : https://www.youtube.com/watch?v=KPBj5rZo6bg
 
 scanner i2c : ``CNC\projet\04-realisation\nunchuck\i2cScan`` 
 
-
-
 https://github.com/infusion/Fritzing/tree/master/Nunchuk
 
 https://www.xarg.org/2016/12/using-a-wii-nunchuk-with-arduino/
@@ -447,7 +468,7 @@ recherche dans le code de la CNC controleur
 de la carte ESP32. Tout est rentré dans l'ordre.
 
 
-Écueil 6 : utilisation de Estlcam : x inversé
+Écueil 6 : utilisation de Estlcam : x inversé [CONTOURNEMENT]
 ----------------------------------------------------------------------------------------------------
 Solution select all path miror
 
